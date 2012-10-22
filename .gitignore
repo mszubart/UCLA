@@ -1,0 +1,14 @@
+*.dll
+*.exe
+*.lib
+*.ilk
+*.tlog
+*.pdb
+*.obj
+*.idb
+*.log
+
+/cpp/UCLA/Debug
+/cpp/UCLA/libUCLA/Debug
+/cpp/UCLA/UCLA_Client/Debug
+/cpp/UCLA/UCLA_Server/Debug

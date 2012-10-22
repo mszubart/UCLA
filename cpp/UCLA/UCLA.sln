@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libUCLA", "libUCLA\libUCLA.vcxproj", "{C47B4F93-D131-45D1-8DB1-CAFD4C8D89E4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UCLA_Server", "UCLA_Server\UCLA_Server.vcxproj", "{C779DBD1-6118-409C-87C1-C513BC1D0263}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UCLA_Client", "UCLA_Client\UCLA_Client.vcxproj", "{7475ACEA-0F17-4C98-9431-95919CDF3DDB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7475ACEA-0F17-4C98-9431-95919CDF3DDB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7475ACEA-0F17-4C98-9431-95919CDF3DDB}.Debug|Win32.Build.0 = Debug|Win32
+		{7475ACEA-0F17-4C98-9431-95919CDF3DDB}.Release|Win32.ActiveCfg = Release|Win32
+		{7475ACEA-0F17-4C98-9431-95919CDF3DDB}.Release|Win32.Build.0 = Release|Win32
+		{C47B4F93-D131-45D1-8DB1-CAFD4C8D89E4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C47B4F93-D131-45D1-8DB1-CAFD4C8D89E4}.Debug|Win32.Build.0 = Debug|Win32
+		{C47B4F93-D131-45D1-8DB1-CAFD4C8D89E4}.Release|Win32.ActiveCfg = Release|Win32
+		{C47B4F93-D131-45D1-8DB1-CAFD4C8D89E4}.Release|Win32.Build.0 = Release|Win32
+		{C779DBD1-6118-409C-87C1-C513BC1D0263}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C779DBD1-6118-409C-87C1-C513BC1D0263}.Debug|Win32.Build.0 = Debug|Win32
+		{C779DBD1-6118-409C-87C1-C513BC1D0263}.Release|Win32.ActiveCfg = Release|Win32
+		{C779DBD1-6118-409C-87C1-C513BC1D0263}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
