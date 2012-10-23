@@ -4,9 +4,6 @@
 
 using namespace std; 
 
-// Gets value from void array as int
-#define V2IArray(buf, index) *(((int*) buf)+index)
-
 void OnDataReceived(char *buf, int len);
 
 int _tmain(int argc, _TCHAR* argv[])
