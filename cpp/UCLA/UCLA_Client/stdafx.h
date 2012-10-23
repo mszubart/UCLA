@@ -8,8 +8,10 @@
 #include "targetver.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <tchar.h>
+#include <time.h>
 
-
+#include <iostream>
 
 // TODO: reference additional headers your program requires here

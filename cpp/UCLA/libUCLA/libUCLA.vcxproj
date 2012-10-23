@@ -20,7 +20,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -43,7 +43,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\mszubart\Desktop\libxs_samples\libxs-1.2.0\include;C:\Users\mszubart\Desktop\libxs_samples\bindings\cpp\cppxs\.git;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\mszubart\Desktop\libxs_samples\libxs-1.2.0\include;C:\Users\mszubart\Desktop\libxs_samples\bindings\cpp\cppxs;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\mszubart\Desktop\libxs_samples\libxs-1.2.0\lib\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -56,6 +57,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libxs.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalDependencies>libxs.lib</AdditionalDependencies>
@@ -94,7 +96,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UClient.cpp" />
-    <ClCompile Include="UConfig.cpp" />
     <ClCompile Include="UServer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

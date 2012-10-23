@@ -35,8 +35,5 @@
     <ClCompile Include="UClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UConfig.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
