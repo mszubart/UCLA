@@ -4,8 +4,6 @@
 #include <stddef.h>
 
 #define UCLA_DEFAULT_PROTO "tcp"
-#define UCLA_SERVER 0
-#define UCLA_CLIENT 1
 
 #define UCLA_ENDPOINT_STR_LEN(i, po, pr) (strlen(pr) + strlen(i) + strlen(po) + 5) // 5 = 1 + strlen("://:")
 
