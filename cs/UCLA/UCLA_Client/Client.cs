@@ -17,11 +17,12 @@ namespace UCLA_Client {
                 for (int i = 0; i < 3; i++) {
                     client.SendData(_8randomBytes());
                 }
+
+                Console.Write("Data sent successfully. Me exiting after you pressing return.\n");
             } catch (Exception ex) {
                 Console.Write(String.Format("Something went horribly wrong:\n\t{0}\n", ex.Message));
             }
 
-            Console.Write("Data sent successfully. Me exiting after you pressing return.\n");
             Console.ReadKey();
         }
 
