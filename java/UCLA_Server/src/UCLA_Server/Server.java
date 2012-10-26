@@ -3,6 +3,7 @@ package UCLA_Server;
 import libUCLA.UConfig;
 import libUCLA.UReceiveHandler;
 import libUCLA.UServer;
+import libUCLA.XSErrorException;
 
 class MessageDisplay implements UReceiveHandler {
 
