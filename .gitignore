@@ -18,3 +18,13 @@
 /cs/UCLA/UCLA_Client/obj
 /cs/UCLA/UCLA_Server/bin
 /cs/UCLA/UCLA_Server/obj
+/java/libUCLA/nbproject/private/
+/java/libUCLA/lib
+/java/libUCLA/dist/
+/java/libUCLA/build/
+/java/UCLA_Server/nbproject/private/
+/java/UCLA_Client/nbproject/private/
+/java/UCLA_Server/build/
+/java/UCLA_Server/dist/
+/java/UCLA_Client/build/
+/java/UCLA_Client/dist/
