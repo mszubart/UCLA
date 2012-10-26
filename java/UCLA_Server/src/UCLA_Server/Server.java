@@ -20,15 +20,15 @@ public class Server {
 
     public static void main(String[] args) {
         MessageDisplay md = new MessageDisplay();
-      //  try {
+        try {
             UConfig config = new UConfig("*", "5555");
             UServer server = new UServer(config, true);
 
             server.SetupReceiveHandler(md);
 
             server.Run();
-//        } catch (Exception ex) {
-//            System.out.printf("%s", ex.getMessage());
-//        }
+        } catch (XSErrorException ex) {
+            System.out.printf("%s", ex.what());
+        }
     }
 }
