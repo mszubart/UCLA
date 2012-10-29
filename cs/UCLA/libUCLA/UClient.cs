@@ -1,4 +1,5 @@
 ﻿using CrossroadsIO;
+using System;
 
 namespace libUCLA {
     public class UClient {
@@ -15,13 +16,15 @@ namespace libUCLA {
         private Socket sock;
         private string endpoint;
 
+        private bool _disposed;
+
         /// <summary>
         /// UCLA Client constructor.
         /// Creates client instance from specified config.
         /// </summary>
         /// <param name="config">Reference to configuration object.</param>
         /// <param name="autostart">Tells if connection will be started automatically. 
-	    /// Otherwise you will have to call Start method. Default value = false.</param>
+        /// Otherwise you will have to call Start method. Default value = false.</param>
         public UClient(UConfig config, bool autostart = false) {
             this.endpoint = config.Endpoint;
 
@@ -52,9 +55,33 @@ namespace libUCLA {
             if (!this.isStarted) {
                 this.Start();
             }
-
-            this.sock.Send(data);
+            this.sock.Send(data, data.Length, SocketFlags.None);
+            //this.sock.Send(data);
         }
 
+        public void Dispose() {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing) {
+            if (!this._disposed) {
+                if (disposing) {
+                    this.sock.Close();
+                    this.ctx.Terminate();
+
+                    this.sock.Dispose();
+                    this.ctx.Dispose();
+                }
+
+                this._disposed = true;
+            }
+        }
+
+        private void EnsureNotDisposed() {
+            if (this._disposed) {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+        }
     }
 }

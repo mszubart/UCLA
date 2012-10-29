@@ -5,7 +5,7 @@ using CrossroadsIO;
 namespace libUCLA {
     public delegate void UReceiveHandler(byte[] buf);
 
-    public class UServer {
+    public class UServer : IDisposable {
         public const int MaxDataLength = 256;
 
         /// <summary>
@@ -25,6 +25,8 @@ namespace libUCLA {
         private Socket sock;
         private string endpoint;
 
+        private bool _disposed;
+
         /// <summary>
         /// UCLA Server constructor.
         /// Creates server instance from specified config.
@@ -38,11 +40,13 @@ namespace libUCLA {
                 this.Start();
             }
         }
-        
+
         /// <summary>
         /// Starts a server.
         /// </summary>
         public void Start() {
+            EnsureNotDisposed();
+
             if (this.isStarted) return;
 
             this.ctx = Context.Create();
@@ -57,6 +61,8 @@ namespace libUCLA {
         /// Receives single message.
         /// </summary>
         public void Receive() {
+            EnsureNotDisposed();
+
             byte[] buf = new byte[UServer.MaxDataLength];
             int receivedLength = this.sock.Receive(buf);
 
@@ -67,15 +73,43 @@ namespace libUCLA {
                 this.DataReceived(callBuf);
             }
         }
-        
+
         /// <summary>
         /// Run in loop and receive messages.
         /// NOTE: This is infinite loop - just don't expect it to stop.
         /// </summary>
         public void Run() {
+            EnsureNotDisposed();
+
             while (true) {
                 this.Receive();
             }
         }
+
+        public void Dispose() {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing) {
+            if (!this._disposed) {
+                if (disposing) {
+                    this.sock.Close();
+                    this.ctx.Terminate();
+
+                    this.sock.Dispose();
+                    this.ctx.Dispose();
+                }
+
+                this._disposed = true;
+            }
+        }
+
+        private void EnsureNotDisposed() {
+            if (this._disposed) {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+        }
+
     }
 }
