@@ -1,6 +1,11 @@
-#pragma once
+#ifndef UCLIENT_H
+#define UCLIENT_H
 
+#ifdef UCLA_HAVE_UNIX
+#include <xs/xs.hpp>
+#else
 #include <xs.hpp>
+#endif
 
 #include "UConfig.h"
 
@@ -50,3 +55,5 @@ private:
 
 	bool _isStarted;
 };
+
+#endif // UCLIENT_H

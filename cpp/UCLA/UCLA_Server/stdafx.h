@@ -3,13 +3,18 @@
 // are changed infrequently
 //
 
-#pragma once
+#ifndef STDAFX_H
+#define STDAFX_H
 
 #include "targetver.h"
 
 #include <stdio.h>
+
+#ifndef UCLA_HAVE_UNIX
 #include <tchar.h>
+#endif
 
 #include <iostream>
 
 // TODO: reference additional headers your program requires here
+#endif // STDAFX_H

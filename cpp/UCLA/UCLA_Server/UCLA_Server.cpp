@@ -6,7 +6,11 @@ using namespace std;
 
 void OnDataReceived(char *buf, int len);
 
+#ifndef UCLA_HAVE_UNIX
 int _tmain(int argc, _TCHAR* argv[])
+#else
+int main(int argc, char** argv)
+#endif
 {
 	cout << "Hi there! You will be receiving a random numbers from remote input.\n";
 	cout << "Use them to win the lottery!\n";

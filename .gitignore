@@ -8,6 +8,7 @@
 *.idb
 *.log
 
+/cpp/UCLA/build
 /cpp/UCLA/Debug
 /cpp/UCLA/libUCLA/Debug
 /cpp/UCLA/UCLA_Client/Debug

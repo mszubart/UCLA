@@ -30,8 +30,8 @@ void UServer::Receive(void){
 	char *buf = new char[UCLA_MAX_MESSAGE_LEN];
 
 	int received_len = this->_sock->recv(buf, UCLA_MAX_MESSAGE_LEN);
-
-	if(this->_receive_handler != NULL){
+	
+    if(this->_receive_handler != NULL){
 		this->_receive_handler(buf, received_len);
 	}
 

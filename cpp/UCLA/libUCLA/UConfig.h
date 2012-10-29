@@ -1,4 +1,5 @@
-#pragma once
+#ifndef UCONFIG_H
+#define UCONFIG_H
 
 #include <string.h>
 #include <stddef.h>
@@ -53,3 +54,4 @@ private:
 	char* _endpoint;
 };
 
+#endif // UCONFIG_H

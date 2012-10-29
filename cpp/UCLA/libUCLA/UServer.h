@@ -1,6 +1,11 @@
-#pragma once
+#ifndef USERVER_H
+#define USERVER_H
 
+#ifdef UCLA_HAVE_UNIX
+#include <xs/xs.hpp>
+#else
 #include <xs.hpp>
+#endif
 
 #include "UConfig.h"
 
@@ -70,3 +75,4 @@ private:
 	bool _isStarted;
 };
 
+#endif // USERVER_H
