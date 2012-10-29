@@ -1,1 +1,0 @@
-UCLA Library for C++

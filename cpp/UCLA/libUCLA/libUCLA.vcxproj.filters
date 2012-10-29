@@ -27,12 +27,18 @@
     <ClInclude Include="UConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="m_safestring.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="m_safestring.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -90,11 +90,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="m_safestring.h" />
     <ClInclude Include="UClient.h" />
     <ClInclude Include="UConfig.h" />
     <ClInclude Include="UServer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="m_safestring.cpp" />
     <ClCompile Include="UClient.cpp" />
     <ClCompile Include="UServer.cpp" />
   </ItemGroup>

@@ -15,7 +15,7 @@ int main(int argc, char** argv)
 #endif
 {
 	char r[RND_LEN];
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 
 	cout << "Me is client. Me is input. Me sending random number things.\n";
 	cout << "Me waiting connection...\n";
@@ -28,7 +28,7 @@ int main(int argc, char** argv)
 		for(int i = 0; i < 3; i++){
 			MakeItRandom(r, RND_LEN);
 
-			client.SendData(r, RND_LEN, true);
+			client.SendData(r, RND_LEN);
 		}
 
 	}catch(xs::error_t err){

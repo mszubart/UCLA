@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stddef.h>
 
+#include "m_safestring.h"
+
 #define UCLA_DEFAULT_PROTO "tcp"
 
 #define UCLA_ENDPOINT_STR_LEN(i, po, pr) (strlen(pr) + strlen(i) + strlen(po) + 5) // 5 = 1 + strlen("://:")
@@ -19,7 +21,7 @@ public:
 	@param \b port Port number (as string).
 	*/
 	UConfig(const char* source, const char* port): _source(source), _port(port), _proto(UCLA_DEFAULT_PROTO){
-		
+
 		int strLength = UCLA_ENDPOINT_STR_LEN(
 			this->_source,
 			this->_port, 
@@ -28,11 +30,19 @@ public:
 		this->_endpoint = new char[strLength];
 
 		// proto://source:port
-		strcpy(this->_endpoint, this->_proto);
-		strcat(this->_endpoint, "://");
-		strcat(this->_endpoint, this->_source);
-		strcat(this->_endpoint, ":");
-		strcat(this->_endpoint, this->_port);
+#ifdef UCLA_HAVE_UNIX
+		m_strlcpy(this->_endpoint, strLength, this->_proto);
+		m_strlcat(this->_endpoint, strLength, "://");
+		m_strlcat(this->_endpoint, strLength, this->_source);
+		m_strlcat(this->_endpoint, strLength, ":");
+		m_strlcat(this->_endpoint, strLength, this->_port);
+#else
+		strcpy_s(this->_endpoint, strLength, this->_proto);
+		strcat_s(this->_endpoint, strLength, "://");
+		strcat_s(this->_endpoint, strLength, this->_source);
+		strcat_s(this->_endpoint, strLength, ":");
+		strcat_s(this->_endpoint, strLength, this->_port);
+#endif
 	}
 
 	~UConfig(void){
