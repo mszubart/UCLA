@@ -14,7 +14,7 @@ public class XSErrorException extends Exception {
     }
 
     public XSErrorException(String message, int code) {
-        super(message); // You have won the lottery!
+        super(message); // You won the lottery!
         this.message = message;
         this.code = code;
     }
