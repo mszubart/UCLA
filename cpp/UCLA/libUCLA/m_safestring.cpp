@@ -60,7 +60,7 @@ size_t m_strlcpy(char *destination, size_t n, char const *source)
 
 size_t m_strlcat(char *destination, size_t n, char const *source)
 {
-    register char *d = destination;
+    	register char *d = destination;
 	register const char *s = source;
 	register size_t i = n;
 	size_t dlen;
@@ -68,11 +68,13 @@ size_t m_strlcat(char *destination, size_t n, char const *source)
 	/* Find the end of destination and adjust bytes left but don't go past end */
 	while (*d != '\0' && i-- != 0)
 		d++;
+
 	dlen = d - destination;
 	i = n - dlen;
 
 	if (i == 0)
 		return(dlen + strlen(s));
+
 	while (*s != '\0') {
 		if (i != 1) {
 			*d++ = *s;
