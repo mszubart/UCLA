@@ -22,7 +22,7 @@ int main(int argc, char** argv)
 
 	try{
 		UConfig config("127.0.0.1", "5555"); // This should be loaded from a configuration file by a loader class
-		UClient client(config);
+        UClient client(config);
 		client.Start();
 
 		for(int i = 0; i < 3; i++){

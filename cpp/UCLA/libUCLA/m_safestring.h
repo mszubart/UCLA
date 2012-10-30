@@ -6,6 +6,7 @@ This is a tiny hack to get those functions (from snprintf).
 */
 
 #include <stdio.h>
+#include <string.h>
 
 #ifndef M_SAFESTRING_H
 #define M_SAFESTRING_H
