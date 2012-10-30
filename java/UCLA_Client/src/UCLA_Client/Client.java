@@ -1,5 +1,6 @@
 package UCLA_Client;
 
+import java.io.IOException;
 import java.util.Random;
 import libUCLA.UClient;
 import libUCLA.UConfig;
@@ -7,7 +8,9 @@ import libUCLA.XSErrorException;
 
 public class Client {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
+        System.out.printf("Me is client. Me is input. Me sending random number things.\n");
+        System.out.printf("Me waiting connection...\n");
 
         try {
             UConfig config = new UConfig("127.0.0.1", "5555");
@@ -17,10 +20,19 @@ public class Client {
                 client.SendData(_8randomBytes());
             }
 
-        } catch (XSErrorException ex) {
-            System.out.printf("%s", ex.what());
-        }
+            client.Close();
 
+            System.out.
+                    printf("Data sent successfully. Me exiting after you pressing return.\n");
+        } catch (XSErrorException ex) {
+            System.out.printf("Something went horribly wrong:\n\t%s", ex.what());
+        }
+        
+        try {
+            System.in.read();
+        } catch (IOException ex) {
+            System.out.printf("Java is so super safe, that even reading input can throw an exception.");
+        }
     }
 
     public static byte[] _8randomBytes() {

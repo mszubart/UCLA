@@ -28,7 +28,7 @@ public final class UServer {
      * Creates server instance from specified config.
      *
      * @param config Reference to configuration object
-     * @throws XSErrorException Will never ever throw this exception, because 
+     * @throws XSErrorException Will never ever throw this exception, because
      * autostart is off by default so there's no attempt to even use libxs.
      */
     public UServer(UConfig config) throws XSErrorException {
@@ -43,7 +43,8 @@ public final class UServer {
      * @param config Reference to configuration object
      * @param autostart Tells if server will be started automatically. Otherwise
      * you will have to call Start method.
-     * @throws XSErrorException exception when something fails (only if autostart is enabled).
+     * @throws XSErrorException exception when something fails (only if
+     * autostart is enabled).
      */
     public UServer(UConfig config, boolean autostart) throws XSErrorException {
         this.endpoint = config.getEndpoint();
@@ -55,6 +56,7 @@ public final class UServer {
 
     /**
      * Starts a server.
+     *
      * @throws XSErrorException exception when something fails.
      */
     public void Start() throws XSErrorException {
@@ -67,7 +69,7 @@ public final class UServer {
         this.sock = this.xs.xs_socket(this.ctx, XsConstants.XS_PULL);
 
         int rc = this.xs.xs_bind(this.sock, this.endpoint);
-        
+
         if (rc == -1) {
             throw new XSErrorException(xs);
         }
@@ -79,6 +81,7 @@ public final class UServer {
      * Receives single message.
      *
      * NOTE: This is blocking.
+     *
      * @throws XSErrorException exception when something fails.
      */
     public void Receive() throws XSErrorException {
@@ -128,5 +131,31 @@ public final class UServer {
      */
     public void SetupReceiveHandler(UReceiveHandler handler) {
         this.DataReceivedHandler = handler;
+    }
+
+    /**
+     * Closes connection and terminates the server. 
+     * Use of this method is not optional.
+     *
+     * @throws XSErrorException exception when something fails.
+     */
+    public void Close() throws XSErrorException {
+        if (!this.isStarted) {
+            return;
+        }
+
+        int rc = this.xs.xs_close(this.sock);
+
+        if (rc != 0) {
+            throw new XSErrorException(this.xs);
+        }
+
+        rc = this.xs.xs_term(this.ctx);
+
+        if (rc != 0) {
+            throw new XSErrorException(this.xs);
+        }
+
+        this.isStarted = false;
     }
 }

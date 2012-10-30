@@ -1,5 +1,6 @@
 package UCLA_Server;
 
+import java.io.IOException;
 import libUCLA.UConfig;
 import libUCLA.UReceiveHandler;
 import libUCLA.UServer;
@@ -20,6 +21,10 @@ class MessageDisplay implements UReceiveHandler {
 public class Server {
 
     public static void main(String[] args) {
+        System.out.printf("Hi there! You will be receiving a random numbers from remote input.\n");
+        System.out.printf("Use them to win the lottery!\n");
+        System.out.printf("Waiting for connection...\n");
+
         MessageDisplay md = new MessageDisplay();
         try {
             UConfig config = new UConfig("*", "5555");
@@ -28,8 +33,16 @@ public class Server {
             server.SetupReceiveHandler(md);
 
             server.Run();
+
+            server.Close(); // Will never be reached.
         } catch (XSErrorException ex) {
-            System.out.printf("%s", ex.what());
+            System.out.printf("Something went horribly wrong:\n\t%s", ex.what());
+        }
+        
+        try {
+            System.in.read();
+        } catch (IOException ex) {
+            System.out.printf("Java is so super safe, that even reading input can throw an exception.");
         }
     }
 }

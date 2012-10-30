@@ -25,7 +25,7 @@ public final class UClient {
      * Creates client instance from specified config.
      *
      * @param config Reference to configuration object
-     * @throws XSErrorException Will never ever throw this exception, because 
+     * @throws XSErrorException Will never ever throw this exception, because
      * autostart is off by default so there's no attempt to even use libxs.
      */
     public UClient(UConfig config) throws XSErrorException {
@@ -40,7 +40,8 @@ public final class UClient {
      * @param config Reference to configuration object
      * @param autostart Tells if connection will be started automatically.
      * Otherwise you will have to call Start method. Default value = false.
-     * @throws XSErrorException exception when something fails (only if autostart is enabled).
+     * @throws XSErrorException exception when something fails (only if
+     * autostart is enabled).
      */
     public UClient(UConfig config, boolean autostart) throws XSErrorException {
         this.endpoint = config.getEndpoint();
@@ -52,6 +53,7 @@ public final class UClient {
 
     /**
      * Starts connection to a server.
+     *
      * @throws XSErrorException exception when something fails.
      */
     public void Start() throws XSErrorException {
@@ -64,7 +66,7 @@ public final class UClient {
         this.sock = this.xs.xs_socket(this.ctx, XsConstants.XS_PUSH);
 
         int rc = this.xs.xs_connect(this.sock, this.endpoint);
-        
+
         if (rc == -1) {
             throw new XSErrorException(xs);
         }
@@ -92,5 +94,30 @@ public final class UClient {
         if (rc == -1) {
             throw new XSErrorException(this.xs);
         }
+    }
+
+    /**
+     * Closes connection and terminates the client.
+     * Use of this method is not optional.
+     * @throws XSErrorException exception when something fails.
+     */
+    public void Close() throws XSErrorException {
+        if (!this.isStarted) {
+            return;
+        }
+
+        int rc = this.xs.xs_close(this.sock);
+        
+        if (rc != 0) {
+            throw new XSErrorException(this.xs);
+        }
+        
+        rc = this.xs.xs_term(this.ctx);
+        
+        if (rc != 0) {
+            throw new XSErrorException(this.xs);
+        }
+        
+        this.isStarted = false;
     }
 }
