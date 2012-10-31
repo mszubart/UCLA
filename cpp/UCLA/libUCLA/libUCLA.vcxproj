@@ -43,8 +43,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\mszubart\Desktop\libxs_samples\libxs-1.2.0\include;C:\Users\mszubart\Desktop\libxs_samples\bindings\cpp\cppxs;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\mszubart\Desktop\libxs_samples\libxs-1.2.0\lib\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\libxs-1.2.0\include;..\..\..\..\bindings\cpp\cppxs;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\libxs-1.2.0\lib\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -63,7 +63,7 @@
       <AdditionalDependencies>libxs.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>C:\Users\mszubart\Desktop\libxs_samples\libxs-1.2.0\lib\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\libxs-1.2.0\lib\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <ProjectReference>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
