@@ -1,5 +1,7 @@
 #include "UServer.h"
 
+using namespace UCLA;
+
 UServer::UServer(UConfig &config, bool autostart){
 	this->_isStarted = false;
 	this->_receive_handler = NULL;

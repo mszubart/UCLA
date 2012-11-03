@@ -1,5 +1,7 @@
 #include "UClient.h"
 
+using namespace UCLA;
+
 UClient::UClient(UConfig &config, bool autostart): _endpoint(config.Endpoint()){
 	this->_isStarted = false;
 	this->_ctx = NULL;

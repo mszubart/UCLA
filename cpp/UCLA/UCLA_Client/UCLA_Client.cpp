@@ -3,16 +3,13 @@
 #include <UClient.h>
 
 using namespace std;
+using namespace UCLA;
 
 #define RND_LEN 8
 
 void MakeItRandom(char *ar, int len);
 
-#ifndef UCLA_HAVE_UNIX
-int _tmain(int argc, _TCHAR* argv[])
-#else
 int main(int argc, char** argv)
-#endif
 {
 	char r[RND_LEN];
 	srand((unsigned int)time(NULL));

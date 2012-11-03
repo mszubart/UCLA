@@ -32,9 +32,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef UCLA_HAVE_UNIX
-
-size_t m_strlcpy(char *destination, size_t n, char const *source)
+size_t UCLA::Utils::m_strlcpy(char *destination, size_t n, char const *source)
 {
 	register char *d = destination;
 	register const char *s = source;
@@ -58,7 +56,7 @@ size_t m_strlcpy(char *destination, size_t n, char const *source)
 	return(s - source - 1);	/* count does not include NUL */
 }
 
-size_t m_strlcat(char *destination, size_t n, char const *source)
+size_t UCLA::Utils::m_strlcat(char *destination, size_t n, char const *source)
 {
     	register char *d = destination;
 	register const char *s = source;
@@ -86,5 +84,3 @@ size_t m_strlcat(char *destination, size_t n, char const *source)
 
 	return(dlen + (s - source));	/* count does not include NUL */
 }
-
-#endif
