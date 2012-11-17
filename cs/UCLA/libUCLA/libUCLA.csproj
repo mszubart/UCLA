@@ -33,6 +33,9 @@
     <Reference Include="CrossroadsIO">
       <HintPath>..\..\..\..\bindings\cs\crossroads-net\src\Core\bin\Release\CrossroadsIO.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\Json45r10\Bin\Net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ULoader_JSON.cs" />
     <Compile Include="UClient.cs" />
     <Compile Include="UConfig.cs" />
     <Compile Include="UServer.cs" />

@@ -10,9 +10,10 @@ namespace UCLA_Server {
             Console.Write("Waiting for connection...\n");
 
             try {
-                UConfig config = new UConfig("*", "5555");
-                UServer server = new UServer(config, true);
+                UServer server = new ULoader_JSON("config.json").GetServer("input1");
                 server.DataReceived += new UReceiveHandler(OnDataReceived);
+                server.Start();
+
                 server.Run();
             } catch (Exception ex) {
                 Console.Write(String.Format("Something went horribly wrong:\n\t{0}\n", ex.Message));
