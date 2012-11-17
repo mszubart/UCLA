@@ -3,7 +3,15 @@
 using CrossroadsIO;
 
 namespace libUCLA {
-    public delegate void UReceiveHandler(byte[] buf);
+    public delegate void UReceiveHandler(object sender, UDataReceivedArgs e);
+
+    public class UDataReceivedArgs : EventArgs {
+        public byte[] Buffer { get; set; }
+
+        public UDataReceivedArgs(byte[] buffer): base() {
+            this.Buffer = buffer;
+        }
+    }
 
     public class UServer : IDisposable {
         public const int MaxDataLength = 256;
@@ -70,7 +78,7 @@ namespace libUCLA {
                 byte[] callBuf = new byte[receivedLength];
                 Array.Copy(buf, callBuf, receivedLength);
 
-                this.DataReceived(callBuf);
+                this.DataReceived(this, new UDataReceivedArgs(callBuf));
             }
         }
 

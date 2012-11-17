@@ -22,10 +22,10 @@ namespace UCLA_Server {
             Console.ReadKey();
         }
 
-        private static void OnDataReceived(byte[] buf) {
+        private static void OnDataReceived(object sender, UDataReceivedArgs e) {
             Console.Write("\n");
 
-            foreach (byte b in buf) {
+            foreach (byte b in e.Buffer) {
                 Console.Write(String.Format("{0:d}\t", b));
             }
         }
