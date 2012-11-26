@@ -8,10 +8,9 @@
 #endif
 
 #include "UConfig.h"
+#include "UException.h"
 
 namespace UCLA{
-
-#define UCLA_MAX_MESSAGE_LEN 256
 
 	typedef void(*UCLA_RECEIVE_HANDLER)(char *buff, int len);
 
@@ -28,6 +27,16 @@ namespace UCLA{
 		Otherwise you will have to call Start method. Default value = false.
 		*/
 		UServer(UConfig &config, bool autostart=false);
+
+		/**
+		Move constructor.
+		*/
+		UServer(const UServer &that);
+
+		/**
+		Move operator.
+		*/
+		UServer& operator=(const UServer& that);
 
 		/**
 		Starts a server.
@@ -63,18 +72,28 @@ namespace UCLA{
 
 		@return True if server has been started
 		*/
-		bool IsStarted(void);
+		bool IsStarted(void) const;
+
+		/**
+		Returns endpoint string.
+		*/
+		const char* Endpoint() const{
+			return this->_endpoint;
+		}
 
 		~UServer(void);
 
 	private:
 		UCLA_RECEIVE_HANDLER _receive_handler;
 
-		const char* _endpoint;
+		char* _endpoint;
 		xs::context_t *_ctx;
 		xs::socket_t *_sock;
 
 		bool _isStarted;
+
+		void CopyEndpoint(const char* endpoint);
+		void CleanUpXS(void);
 	};
 }
 #endif // USERVER_H

@@ -13,6 +13,10 @@
 /cpp/UCLA/libUCLA/Debug
 /cpp/UCLA/UCLA_Client/Debug
 /cpp/UCLA/UCLA_Server/Debug
+/cpp/UCLA/Release
+/cpp/UCLA/libUCLA/Release
+/cpp/UCLA/UCLA_Client/Release
+/cpp/UCLA/UCLA_Server/Release
 /cs/UCLA/libUCLA/bin
 /cs/UCLA/libUCLA/obj
 /cs/UCLA/UCLA_Client/bin

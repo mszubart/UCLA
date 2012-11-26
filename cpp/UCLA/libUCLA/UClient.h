@@ -8,6 +8,7 @@
 #endif
 
 #include "UConfig.h"
+#include "UException.h"
 
 namespace UCLA{
 
@@ -27,6 +28,16 @@ namespace UCLA{
 		UClient(UConfig &config, bool autostart=false);
 
 		/**
+		Move cpnstructor.
+		*/
+		UClient(const UClient &that);
+
+		/**
+		Move operator.
+		*/
+		UClient& operator=(const UClient& that);
+
+		/**
 		Starts connection to a server.
 		*/
 		void Start(void);
@@ -41,21 +52,31 @@ namespace UCLA{
 		*/
 		void SendData(const char *buf, size_t len, bool nonBlocking=false);
 
-		~UClient(void);
-
 		/**
 		Tells if connection has been started
 
 		@return True if connection has been started
 		*/
-		bool IsStarted(void);
+		bool IsStarted(void) const;
+
+		/**
+		Returns endpoint string.
+		*/
+		const char* Endpoint() const{
+			return this->_endpoint;
+		}
+
+		~UClient(void);
 
 	private:
-		const char* _endpoint;
+		char* _endpoint;
 		xs::context_t *_ctx;
 		xs::socket_t *_sock;
 
 		bool _isStarted;
+
+		void CopyEndpoint(const char* endpoint);
+		void CleanUpXS(void);
 	};
 }
 #endif // UCLIENT_H

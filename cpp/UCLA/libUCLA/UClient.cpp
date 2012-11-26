@@ -1,17 +1,68 @@
 #include "UClient.h"
+#include "config.h"
 
 using namespace UCLA;
 
-UClient::UClient(UConfig &config, bool autostart): _endpoint(config.Endpoint()){
+UClient::UClient(UConfig &config, bool autostart){
 	this->_isStarted = false;
 	this->_ctx = NULL;
 	this->_sock = NULL;
+	this->_endpoint = NULL;
 
-	this->_endpoint = config.Endpoint();
+	CopyEndpoint(config.Endpoint());
 
 	if(autostart){
 		Start();
 	}
+}
+
+UClient::UClient(const UClient &that){
+	if(this->_isStarted)
+	{
+		this->CleanUpXS();
+	}
+
+	this->_isStarted = false;
+	this->_ctx = NULL;
+	this->_sock = NULL;
+	this->_endpoint = NULL;
+
+	CopyEndpoint(that.Endpoint());
+
+	that.~UClient();
+}
+
+UClient& UClient::operator=(const UClient& that){
+	if (this != &that){
+		if(this->_isStarted)
+		{
+			this->CleanUpXS();
+		}
+
+		this->_isStarted = false;
+		this->_ctx = NULL;
+		this->_sock = NULL;
+
+		CopyEndpoint(that.Endpoint());
+
+		that.~UClient();
+	}
+
+	return *this;
+}
+
+void UClient::CopyEndpoint(const char* endpoint){
+	using namespace Utils;
+
+	if(this->_endpoint != NULL)
+		delete[] this->_endpoint;
+
+	int strLength = strlen(endpoint) + 1;
+
+	char* tmp_endpoint = new char[strLength];
+	this->_endpoint = tmp_endpoint;
+
+	m_strlcpy(this->_endpoint, strLength, endpoint);
 }
 
 void UClient::Start(void){
@@ -19,10 +70,14 @@ void UClient::Start(void){
 		return;
 	}
 
-	this->_ctx = new xs::context_t();
-	this->_sock = new xs::socket_t(*(this->_ctx), XS_PUSH);
+	try{
+		this->_ctx = new xs::context_t();
+		this->_sock = new xs::socket_t(*(this->_ctx), XS_PUSH);
 
-	this->_sock->connect(this->_endpoint);
+		this->_sock->connect(this->_endpoint);
+	}catch(xs::error_t &err){
+		throw UException(err.what());
+	}
 
 	this->_isStarted = true;
 }
@@ -32,14 +87,18 @@ void UClient::SendData(const char *buf, size_t len, bool nonBlocking){
 		Start();
 	}
 
-	this->_sock->send(buf, len, nonBlocking? XS_DONTWAIT : 0);
+	try{
+		this->_sock->send(buf, len, nonBlocking? XS_DONTWAIT : 0);
+	}catch(xs::error_t &err){
+		throw UException(err.what());
+	}
 }
 
-bool UClient::IsStarted(void){
+bool UClient::IsStarted(void) const{
 	return this->_isStarted;
 }
 
-UClient::~UClient(void){
+void UClient::CleanUpXS(void){
 	if(this->_sock != NULL){
 		this->_sock->close();
 		delete this->_sock;
@@ -52,4 +111,13 @@ UClient::~UClient(void){
 
 		this->_ctx = NULL;
 	}
+}
+
+UClient::~UClient(void){
+	this->_isStarted = false;
+
+	delete[] this->_endpoint;
+	this->_endpoint = NULL;
+
+	this->CleanUpXS();
 }

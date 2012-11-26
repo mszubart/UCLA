@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include <UClient.h>
+#include <ULoader_JSON.h>
 
 using namespace std;
 using namespace UCLA;
@@ -16,23 +17,23 @@ int main(int argc, char** argv)
 
 	cout << "Me is client. Me is input. Me sending random number things.\n";
 	cout << "Me waiting connection...\n";
-
+	
 	try{
-		UConfig config("127.0.0.1", "5555"); // This should be loaded from a configuration file by a loader class
-        UClient client(config);
-		client.Start();
+		
+		ULoader_JSON configLoader("config.json");
+		unique_ptr<UClient> client = configLoader.GetClient("output1");
+		client->Start();
 
 		for(int i = 0; i < 3; i++){
 			MakeItRandom(r, RND_LEN);
 
-			client.SendData(r, RND_LEN);
+			client->SendData(r, RND_LEN);
 		}
 
-	}catch(xs::error_t err){
+		cout << "Data sent successfully. Me exiting after you pressing return.\n";
+	}catch(std::exception &err){
 		cout << "Something went horribly wrong:\n\t" << err.what() <<"\n";
 	}
-
-	cout << "Data sent successfully. Me exiting after you pressing return.\n";
 
 	getchar();
 	return 0;

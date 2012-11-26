@@ -43,8 +43,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\..\..\libxs-1.2.0\include;..\..\..\..\bindings\cpp\cppxs;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\..\libxs-1.2.0\lib\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\libxs-1.2.0\include;..\..\..\..\bindings\cpp\cppxs;..\..\..\..\jansson-2.4\src;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\libxs-1.2.0\lib\Win32;..\..\..\..\jansson-2.4\win32\vs2010\Output\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -60,10 +60,10 @@
       <AdditionalDependencies>libxs.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>libxs.lib</AdditionalDependencies>
+      <AdditionalDependencies>libxs.lib;jansson.lib</AdditionalDependencies>
     </Lib>
     <Lib>
-      <AdditionalLibraryDirectories>..\..\..\..\libxs-1.2.0\lib\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\libxs-1.2.0\lib\Win32;..\..\..\..\jansson-2.4\win32\vs2010\Output\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <ProjectReference>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
@@ -90,14 +90,18 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="config.h" />
     <ClInclude Include="m_safestring.h" />
     <ClInclude Include="UClient.h" />
     <ClInclude Include="UConfig.h" />
+    <ClInclude Include="UException.h" />
+    <ClInclude Include="ULoader_JSON.h" />
     <ClInclude Include="UServer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="m_safestring.cpp" />
     <ClCompile Include="UClient.cpp" />
+    <ClCompile Include="ULoader_JSON.cpp" />
     <ClCompile Include="UServer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

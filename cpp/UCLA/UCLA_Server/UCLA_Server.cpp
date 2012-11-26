@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include <UServer.h>
+#include <ULoader_JSON.h>
 
 using namespace std; 
 using namespace UCLA;
@@ -14,14 +15,14 @@ int main(int argc, char** argv)
 	cout << "Waiting for connection...\n";
 
 	try{
-		UConfig config("*","5555"); // This should be loaded from a configuration file by a loader class
-		UServer server(config);
+		ULoader_JSON configLoader("config.json");
+		unique_ptr<UServer> server = configLoader.GetServer("input1");
 
-		server.SetupReceiveHandler(OnDataReceived);
+		server->SetupReceiveHandler(OnDataReceived);
 
-		server.Start();
-		server.Run();
-	}catch(xs::error_t err){
+		server->Start();
+		server->Run();
+	}catch(std::exception &err){
 		cout << "Something went horribly wrong:\n\t" << err.what() << "\n";
 	}
 
