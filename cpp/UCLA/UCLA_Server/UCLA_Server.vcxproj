@@ -44,7 +44,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\..\..\..\bindings\cpp\cppxs;..\..\..\..\libxs-1.2.0\include;..\..\..\..\UCLA\cpp\UCLA\libUCLA;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\..\..\UCLA\cpp\UCLA\libUCLA;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

@@ -1,6 +1,12 @@
 #include "UServer.h"
 #include "config.h"
 
+#ifdef UCLA_HAVE_UNIX
+#include <xs/xs.hpp>
+#else
+#include <xs.hpp>
+#endif
+
 using namespace UCLA;
 
 UServer::UServer(UConfig &config, bool autostart){
@@ -24,9 +30,9 @@ void UServer::Start(void){
 
 	try{
 		this->_ctx = new xs::context_t();
-		this->_sock = new xs::socket_t(*(this->_ctx), XS_PULL);
+		this->_sock = new xs::socket_t(*(static_cast<xs::context_t*>(this->_ctx)), XS_PULL);
 
-		this->_sock->bind(this->_endpoint);
+		static_cast<xs::socket_t*>(this->_sock)->bind(this->_endpoint);
 	}catch(xs::error_t &err){
 		throw UException(err.what());
 	}
@@ -39,7 +45,7 @@ void UServer::Receive(void){
 	int received_len = -1;
 
 	try{
-		received_len = this->_sock->recv(buf, UCLA_MAX_MESSAGE_LEN);
+		received_len = static_cast<xs::socket_t*>(this->_sock)->recv(buf, UCLA_MAX_MESSAGE_LEN);
 	}catch(xs::error_t &err){
 		throw UException(err.what());
 	}
@@ -48,7 +54,7 @@ void UServer::Receive(void){
 		this->_receive_handler(buf, received_len);
 	}
 
-	delete buf;
+	delete[] buf;
 }
 
 void UServer::Run(void){
@@ -61,7 +67,7 @@ void UServer::SetupReceiveHandler(UCLA_RECEIVE_HANDLER handler){
 	this->_receive_handler = handler;
 }
 
-UServer::UServer(const UServer &that){
+UServer::UServer(UServer &&that){
 	if(this->_isStarted)
 	{
 		this->CleanUpXS();
@@ -77,7 +83,7 @@ UServer::UServer(const UServer &that){
 	that.~UServer();
 }
 
-UServer& UServer::operator=(const UServer& that){
+UServer& UServer::operator=(UServer&& that){
 	if (this != &that){
 		if(this->_isStarted)
 		{
@@ -116,14 +122,14 @@ bool UServer::IsStarted(void) const{
 
 void UServer::CleanUpXS(void){
 	if(this->_sock != NULL){
-		this->_sock->close();
-		delete this->_sock;
+		static_cast<xs::socket_t*>(this->_sock)->close();
+		delete static_cast<xs::socket_t*>(this->_sock);
 
 		this->_sock = NULL;
 	}
 
 	if(this->_ctx != NULL){
-		delete this->_ctx;
+		delete static_cast<xs::context_t*>(this->_ctx);
 
 		this->_ctx = NULL;
 	}

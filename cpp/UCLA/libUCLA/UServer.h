@@ -1,12 +1,6 @@
 #ifndef USERVER_H
 #define USERVER_H
 
-#ifdef UCLA_HAVE_UNIX
-#include <xs/xs.hpp>
-#else
-#include <xs.hpp>
-#endif
-
 #include "UConfig.h"
 #include "UException.h"
 
@@ -31,12 +25,12 @@ namespace UCLA{
 		/**
 		Move constructor.
 		*/
-		UServer(const UServer &that);
+		UServer(UServer &&that);
 
 		/**
 		Move operator.
 		*/
-		UServer& operator=(const UServer& that);
+		UServer& operator=(UServer&& that);
 
 		/**
 		Starts a server.
@@ -87,8 +81,8 @@ namespace UCLA{
 		UCLA_RECEIVE_HANDLER _receive_handler;
 
 		char* _endpoint;
-		xs::context_t *_ctx;
-		xs::socket_t *_sock;
+		void *_ctx;
+		void *_sock;
 
 		bool _isStarted;
 

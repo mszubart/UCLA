@@ -26,7 +26,7 @@ namespace UCLA{
 			this->CreateEndpoint(source, port);
 		}
 
-		UConfig(const UConfig &that){
+		UConfig(UConfig &&that){
 			this->CopyEndpoint(that.Endpoint());
 		}
 
@@ -35,7 +35,7 @@ namespace UCLA{
 			this->_endpoint = NULL;
 		}
 
-		UConfig& operator=(const UConfig& that){
+		UConfig& operator=(UConfig&& that){
 			if (this != &that)
 			{
 				this->CopyEndpoint(that.Endpoint());

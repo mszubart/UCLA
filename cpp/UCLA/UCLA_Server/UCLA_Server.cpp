@@ -22,11 +22,11 @@ int main(int argc, char** argv)
 
 		server->Start();
 		server->Run();
-	}catch(std::exception &err){
+	}catch(UException &err){
 		cout << "Something went horribly wrong:\n\t" << err.what() << "\n";
 	}
 
-	getchar();
+	(void) getchar();
 	return 0;
 }
 

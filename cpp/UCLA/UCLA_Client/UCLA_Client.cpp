@@ -19,7 +19,6 @@ int main(int argc, char** argv)
 	cout << "Me waiting connection...\n";
 	
 	try{
-		
 		ULoader_JSON configLoader("config.json");
 		unique_ptr<UClient> client = configLoader.GetClient("output1");
 		client->Start();
@@ -31,11 +30,11 @@ int main(int argc, char** argv)
 		}
 
 		cout << "Data sent successfully. Me exiting after you pressing return.\n";
-	}catch(std::exception &err){
+	}catch(UException &err){
 		cout << "Something went horribly wrong:\n\t" << err.what() <<"\n";
 	}
 
-	getchar();
+	(void) getchar();
 	return 0;
 }
 

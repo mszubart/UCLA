@@ -1,12 +1,6 @@
 #ifndef UCLIENT_H
 #define UCLIENT_H
 
-#ifdef UCLA_HAVE_UNIX
-#include <xs/xs.hpp>
-#else
-#include <xs.hpp>
-#endif
-
 #include "UConfig.h"
 #include "UException.h"
 
@@ -25,17 +19,17 @@ namespace UCLA{
 		@param \b autostart Tells if connection will be started automatically. 
 		Otherwise you will have to call Start method. Default value = false.
 		*/
-		UClient(UConfig &config, bool autostart=false);
+		UClient(UConfig& config, bool autostart=false);
 
 		/**
 		Move cpnstructor.
 		*/
-		UClient(const UClient &that);
+		UClient(UClient&& that);
 
 		/**
 		Move operator.
 		*/
-		UClient& operator=(const UClient& that);
+		UClient& operator=(UClient&& that);
 
 		/**
 		Starts connection to a server.
@@ -50,7 +44,7 @@ namespace UCLA{
 		@param \b nonBlocking Specifies that the operation should be performed in non-blocking mode. Default value = false.
 		@throws xs::error_t exception when something fails.
 		*/
-		void SendData(const char *buf, size_t len, bool nonBlocking=false);
+		void SendData(const char* buf, size_t len, bool nonBlocking=false);
 
 		/**
 		Tells if connection has been started
@@ -70,8 +64,8 @@ namespace UCLA{
 
 	private:
 		char* _endpoint;
-		xs::context_t *_ctx;
-		xs::socket_t *_sock;
+		void *_ctx;
+		void *_sock;
 
 		bool _isStarted;
 

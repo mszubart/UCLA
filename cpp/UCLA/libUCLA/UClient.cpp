@@ -1,6 +1,12 @@
 #include "UClient.h"
 #include "config.h"
 
+#ifdef UCLA_HAVE_UNIX
+#include <xs/xs.hpp>
+#else
+#include <xs.hpp>
+#endif
+
 using namespace UCLA;
 
 UClient::UClient(UConfig &config, bool autostart){
@@ -16,7 +22,7 @@ UClient::UClient(UConfig &config, bool autostart){
 	}
 }
 
-UClient::UClient(const UClient &that){
+UClient::UClient(UClient&& that){
 	if(this->_isStarted)
 	{
 		this->CleanUpXS();
@@ -32,7 +38,7 @@ UClient::UClient(const UClient &that){
 	that.~UClient();
 }
 
-UClient& UClient::operator=(const UClient& that){
+UClient& UClient::operator=(UClient&& that){
 	if (this != &that){
 		if(this->_isStarted)
 		{
@@ -72,9 +78,9 @@ void UClient::Start(void){
 
 	try{
 		this->_ctx = new xs::context_t();
-		this->_sock = new xs::socket_t(*(this->_ctx), XS_PUSH);
+		this->_sock = new xs::socket_t(*(static_cast<xs::context_t*>(this->_ctx)), XS_PUSH);
 
-		this->_sock->connect(this->_endpoint);
+		static_cast<xs::socket_t*>(this->_sock)->connect(this->_endpoint);
 	}catch(xs::error_t &err){
 		throw UException(err.what());
 	}
@@ -88,7 +94,7 @@ void UClient::SendData(const char *buf, size_t len, bool nonBlocking){
 	}
 
 	try{
-		this->_sock->send(buf, len, nonBlocking? XS_DONTWAIT : 0);
+		static_cast<xs::socket_t*>(this->_sock)->send(buf, len, nonBlocking? XS_DONTWAIT : 0);
 	}catch(xs::error_t &err){
 		throw UException(err.what());
 	}
@@ -100,14 +106,14 @@ bool UClient::IsStarted(void) const{
 
 void UClient::CleanUpXS(void){
 	if(this->_sock != NULL){
-		this->_sock->close();
-		delete this->_sock;
+		static_cast<xs::socket_t*>(this->_sock)->close();
+		delete static_cast<xs::socket_t*>(this->_sock);
 
 		this->_sock = NULL;
 	}
 
 	if(this->_ctx != NULL){
-		delete this->_ctx;
+		delete static_cast<xs::context_t*>(this->_ctx);
 
 		this->_ctx = NULL;
 	}
