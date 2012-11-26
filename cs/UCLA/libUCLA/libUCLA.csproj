@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UException.cs" />
     <Compile Include="ULoader_JSON.cs" />
     <Compile Include="UClient.cs" />
     <Compile Include="UConfig.cs" />

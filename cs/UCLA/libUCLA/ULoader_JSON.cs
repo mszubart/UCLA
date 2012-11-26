@@ -11,7 +11,7 @@ namespace libUCLA {
     /// For best debugging, you should check inner exception.
     /// </summary>
     [Serializable]    
-    public class ULoaderException : Exception {
+    public class ULoaderException : UException {
         public ULoaderException() : base() { }
         public ULoaderException(string message) : base(message) { }
         public ULoaderException(string message, Exception innerException) : base(message, innerException) { }

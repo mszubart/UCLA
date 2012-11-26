@@ -15,7 +15,7 @@ namespace UCLA_Server {
                 server.Start();
 
                 server.Run();
-            } catch (Exception ex) {
+            } catch (UException ex) {
                 Console.Write(String.Format("Something went horribly wrong:\n\t{0}\n", ex.Message));
             }
 

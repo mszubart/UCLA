@@ -8,7 +8,8 @@ namespace libUCLA {
     public class UDataReceivedArgs : EventArgs {
         public byte[] Buffer { get; set; }
 
-        public UDataReceivedArgs(byte[] buffer): base() {
+        public UDataReceivedArgs(byte[] buffer)
+            : base() {
             this.Buffer = buffer;
         }
     }
@@ -57,10 +58,15 @@ namespace libUCLA {
 
             if (this.isStarted) return;
 
-            this.ctx = Context.Create();
-            this.sock = this.ctx.CreateSocket(SocketType.PULL);
+            try {
+                this.ctx = Context.Create();
+                this.sock = this.ctx.CreateSocket(SocketType.PULL);
 
-            this.sock.Bind(this.endpoint);
+                this.sock.Bind(this.endpoint);
+            }
+            catch (XsException ex) {
+                throw new UException(ex.Message, ex);
+            }
 
             this.isStarted = true;
         }
@@ -72,7 +78,14 @@ namespace libUCLA {
             EnsureNotDisposed();
 
             byte[] buf = new byte[UServer.MaxDataLength];
-            int receivedLength = this.sock.Receive(buf);
+            int receivedLength = -1;
+
+            try {
+                receivedLength = this.sock.Receive(buf);
+            }
+            catch (XsException ex) {
+                throw new UException(ex.Message, ex);
+            }
 
             if (this.DataReceived != null) {
                 byte[] callBuf = new byte[receivedLength];
@@ -102,11 +115,16 @@ namespace libUCLA {
         protected virtual void Dispose(bool disposing) {
             if (!this._disposed) {
                 if (disposing) {
-                    this.sock.Close();
-                    this.ctx.Terminate();
+                    try {
+                        this.sock.Close();
+                        this.ctx.Terminate();
 
-                    this.sock.Dispose();
-                    this.ctx.Dispose();
+                        this.sock.Dispose();
+                        this.ctx.Dispose();
+                    }
+                    catch (XsException ex) {
+                        throw new UException(ex.Message, ex);
+                    }
                 }
 
                 this._disposed = true;

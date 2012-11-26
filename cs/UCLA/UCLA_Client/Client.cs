@@ -19,7 +19,7 @@ namespace UCLA_Client {
                 }
 
                 Console.Write("Data sent successfully. Me exiting after you pressing return.\n");
-            } catch (Exception ex) {
+            } catch (UException ex) {
                 Console.Write(String.Format("Something went horribly wrong:\n\t{0}\n", ex.Message));
             }
 

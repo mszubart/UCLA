@@ -39,10 +39,15 @@ namespace libUCLA {
         public void Start() {
             if (this.isStarted) return;
 
-            this.ctx = Context.Create();
-            this.sock = this.ctx.CreateSocket(SocketType.PUSH);
+            try {
+                this.ctx = Context.Create();
+                this.sock = this.ctx.CreateSocket(SocketType.PUSH);
 
-            this.sock.Connect(this.endpoint);
+                this.sock.Connect(this.endpoint);
+            }
+            catch (XsException ex) {
+                throw new UException(ex.Message, ex);
+            }
 
             this.isStarted = true;
         }
@@ -55,8 +60,13 @@ namespace libUCLA {
             if (!this.isStarted) {
                 this.Start();
             }
-            this.sock.Send(data, data.Length, SocketFlags.None);
-            //this.sock.Send(data);
+
+            try {
+                this.sock.Send(data, data.Length, SocketFlags.None);
+            }
+            catch (XsException ex) {
+                throw new UException(ex.Message, ex);
+            }
         }
 
         public void Dispose() {
@@ -67,11 +77,16 @@ namespace libUCLA {
         protected virtual void Dispose(bool disposing) {
             if (!this._disposed) {
                 if (disposing) {
-                    this.sock.Close();
-                    this.ctx.Terminate();
+                    try {
+                        this.sock.Close();
+                        this.ctx.Terminate();
 
-                    this.sock.Dispose();
-                    this.ctx.Dispose();
+                        this.sock.Dispose();
+                        this.ctx.Dispose();
+                    }
+                    catch (XsException ex) {
+                        throw new UException(ex.Message, ex);
+                    }
                 }
 
                 this._disposed = true;
