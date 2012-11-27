@@ -1,6 +1,6 @@
 set(the_target "UCLA_Server")
 
-add_definitions(-Wall)
+add_definitions(-Wall -std=c++0x)
 include_directories (${UCLA_SOURCE_DIR}/libUCLA)
 link_directories (${UCLA_BINARY_DIR}/libUCLA) 
 
