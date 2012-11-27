@@ -12,7 +12,6 @@ namespace UCLA_Client {
 
             try {
                 UClient client = new ULoader_JSON("config.json").GetClient("output1");
-                client.Start();
 
                 for (int i = 0; i < 3; i++) {
                     client.SendData(_8randomBytes());

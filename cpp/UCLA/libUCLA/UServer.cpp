@@ -41,6 +41,10 @@ void UServer::Start(void){
 }
 
 void UServer::Receive(void){
+	if(!this->_isStarted){
+		this->Start();
+	}
+
 	char *buf = new char[UCLA_MAX_MESSAGE_LEN];
 	int received_len = -1;
 

@@ -20,7 +20,6 @@ int main(int argc, char** argv)
 
 		server->SetupReceiveHandler(OnDataReceived);
 
-		server->Start();
 		server->Run();
 	}catch(UException &err){
 		cout << "Something went horribly wrong:\n\t" << err.what() << "\n";

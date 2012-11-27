@@ -12,7 +12,6 @@ namespace UCLA_Server {
             try {
                 UServer server = new ULoader_JSON("config.json").GetServer("input1");
                 server.DataReceived += new UReceiveHandler(OnDataReceived);
-                server.Start();
 
                 server.Run();
             } catch (UException ex) {

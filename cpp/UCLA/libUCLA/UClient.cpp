@@ -90,7 +90,7 @@ void UClient::Start(void){
 
 void UClient::SendData(const char *buf, size_t len, bool nonBlocking){
 	if(!this->_isStarted){
-		Start();
+		this->Start();
 	}
 
 	try{

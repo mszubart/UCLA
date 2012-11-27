@@ -85,7 +85,9 @@ public final class UServer {
      * @throws XSErrorException exception when something fails.
      */
     public void Receive() throws UException {
-        if(!this.isStarted) this.Start();
+        if(!this.isStarted) {
+            this.Start();
+        }
         
         ByteBuffer buf = ByteBuffer.allocateDirect(UServer.MaxDataLength);
 

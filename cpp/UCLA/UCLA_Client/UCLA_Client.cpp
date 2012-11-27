@@ -21,7 +21,6 @@ int main(int argc, char** argv)
 	try{
 		ULoader_JSON configLoader("config.json");
 		unique_ptr<UClient> client = configLoader.GetClient("output1");
-		client->Start();
 
 		for(int i = 0; i < 3; i++){
 			MakeItRandom(r, RND_LEN);

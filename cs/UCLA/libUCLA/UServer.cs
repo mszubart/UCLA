@@ -76,6 +76,9 @@ namespace libUCLA {
         /// </summary>
         public void Receive() {
             EnsureNotDisposed();
+            if (!this.isStarted) {
+                this.Start();
+            }
 
             byte[] buf = new byte[UServer.MaxDataLength];
             int receivedLength = -1;
