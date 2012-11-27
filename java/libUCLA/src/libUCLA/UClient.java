@@ -28,7 +28,7 @@ public final class UClient {
      * @throws XSErrorException Will never ever throw this exception, because
      * autostart is off by default so there's no attempt to even use libxs.
      */
-    public UClient(UConfig config) throws XSErrorException {
+    public UClient(UConfig config) throws UException {
         this(config, false);
     }
 
@@ -43,7 +43,7 @@ public final class UClient {
      * @throws XSErrorException exception when something fails (only if
      * autostart is enabled).
      */
-    public UClient(UConfig config, boolean autostart) throws XSErrorException {
+    public UClient(UConfig config, boolean autostart) throws UException {
         this.endpoint = config.getEndpoint();
 
         if (autostart) {
@@ -56,7 +56,7 @@ public final class UClient {
      *
      * @throws XSErrorException exception when something fails.
      */
-    public void Start() throws XSErrorException {
+    public void Start() throws UException {
         if (this.isStarted) {
             return;
         }
@@ -68,7 +68,7 @@ public final class UClient {
         int rc = this.xs.xs_connect(this.sock, this.endpoint);
 
         if (rc == -1) {
-            throw new XSErrorException(xs);
+            throw new UException(xs);
         }
 
         this.isStarted = true;
@@ -81,7 +81,7 @@ public final class UClient {
      * @param len Length of the data.
      * @throws XSErrorException exception when something fails.
      */
-    public void SendData(byte[] data) throws XSErrorException {
+    public void SendData(byte[] data) throws UException {
         if (!this.isStarted) {
             this.Start();
         }
@@ -92,7 +92,7 @@ public final class UClient {
         int rc = this.xs.xs_send(this.sock, buf, 0, data.length, 0);
 
         if (rc == -1) {
-            throw new XSErrorException(this.xs);
+            throw new UException(this.xs);
         }
     }
 
@@ -101,7 +101,7 @@ public final class UClient {
      * Use of this method is not optional.
      * @throws XSErrorException exception when something fails.
      */
-    public void Close() throws XSErrorException {
+    public void Close() throws UException {
         if (!this.isStarted) {
             return;
         }
@@ -109,13 +109,13 @@ public final class UClient {
         int rc = this.xs.xs_close(this.sock);
         
         if (rc != 0) {
-            throw new XSErrorException(this.xs);
+            throw new UException(this.xs);
         }
         
         rc = this.xs.xs_term(this.ctx);
         
         if (rc != 0) {
-            throw new XSErrorException(this.xs);
+            throw new UException(this.xs);
         }
         
         this.isStarted = false;

@@ -3,8 +3,8 @@ package UCLA_Client;
 import java.io.IOException;
 import java.util.Random;
 import libUCLA.UClient;
-import libUCLA.UConfig;
-import libUCLA.XSErrorException;
+import libUCLA.UException;
+import libUCLA.ULoader_JSON;
 
 public class Client {
 
@@ -13,8 +13,7 @@ public class Client {
         System.out.printf("Me waiting connection...\n");
 
         try {
-            UConfig config = new UConfig("127.0.0.1", "5555");
-            UClient client = new UClient(config, true);
+            UClient client = new ULoader_JSON("config.json").getClient("output1");
 
             for (int i = 0; i < 3; i++) {
                 client.SendData(_8randomBytes());
@@ -24,7 +23,7 @@ public class Client {
 
             System.out.
                     printf("Data sent successfully. Me exiting after you pressing return.\n");
-        } catch (XSErrorException ex) {
+        } catch (UException ex) {
             System.out.printf("Something went horribly wrong:\n\t%s", ex.what());
         }
         

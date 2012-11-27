@@ -1,10 +1,10 @@
 package UCLA_Server;
 
 import java.io.IOException;
-import libUCLA.UConfig;
 import libUCLA.UReceiveHandler;
 import libUCLA.UServer;
-import libUCLA.XSErrorException;
+import libUCLA.UException;
+import libUCLA.ULoader_JSON;
 
 class MessageDisplay implements UReceiveHandler {
 
@@ -27,15 +27,14 @@ public class Server {
 
         MessageDisplay md = new MessageDisplay();
         try {
-            UConfig config = new UConfig("*", "5555");
-            UServer server = new UServer(config, true);
+            UServer server = new ULoader_JSON("config.json").getServer("input1");
 
             server.SetupReceiveHandler(md);
 
             server.Run();
 
             server.Close(); // Will never be reached.
-        } catch (XSErrorException ex) {
+        } catch (UException ex) {
             System.out.printf("Something went horribly wrong:\n\t%s", ex.what());
         }
         

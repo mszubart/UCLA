@@ -31,7 +31,7 @@ public final class UServer {
      * @throws XSErrorException Will never ever throw this exception, because
      * autostart is off by default so there's no attempt to even use libxs.
      */
-    public UServer(UConfig config) throws XSErrorException {
+    public UServer(UConfig config) throws UException {
         this(config, false);
     }
 
@@ -46,7 +46,7 @@ public final class UServer {
      * @throws XSErrorException exception when something fails (only if
      * autostart is enabled).
      */
-    public UServer(UConfig config, boolean autostart) throws XSErrorException {
+    public UServer(UConfig config, boolean autostart) throws UException {
         this.endpoint = config.getEndpoint();
 
         if (autostart) {
@@ -59,7 +59,7 @@ public final class UServer {
      *
      * @throws XSErrorException exception when something fails.
      */
-    public void Start() throws XSErrorException {
+    public void Start() throws UException {
         if (this.isStarted) {
             return;
         }
@@ -71,7 +71,7 @@ public final class UServer {
         int rc = this.xs.xs_bind(this.sock, this.endpoint);
 
         if (rc == -1) {
-            throw new XSErrorException(xs);
+            throw new UException(xs);
         }
 
         this.isStarted = true;
@@ -84,14 +84,16 @@ public final class UServer {
      *
      * @throws XSErrorException exception when something fails.
      */
-    public void Receive() throws XSErrorException {
+    public void Receive() throws UException {
+        if(!this.isStarted) this.Start();
+        
         ByteBuffer buf = ByteBuffer.allocateDirect(UServer.MaxDataLength);
 
         int receivedLength =
                 this.xs.xs_recv(this.sock, buf, 0, MaxDataLength, 0);
 
         if (receivedLength < 0) {
-            throw new XSErrorException(this.xs);
+            throw new UException(this.xs);
         }
 
         if (this.DataReceivedHandler != null) {
@@ -111,7 +113,7 @@ public final class UServer {
         while (true) {
             try {
                 this.Receive();
-            } catch (XSErrorException ex) {
+            } catch (UException ex) {
                 System.err.
                         printf("libxs caught exception: %s\n Who cares! This loop will continue.",
                                ex.what());
@@ -139,7 +141,7 @@ public final class UServer {
      *
      * @throws XSErrorException exception when something fails.
      */
-    public void Close() throws XSErrorException {
+    public void Close() throws UException {
         if (!this.isStarted) {
             return;
         }
@@ -147,13 +149,13 @@ public final class UServer {
         int rc = this.xs.xs_close(this.sock);
 
         if (rc != 0) {
-            throw new XSErrorException(this.xs);
+            throw new UException(this.xs);
         }
 
         rc = this.xs.xs_term(this.ctx);
 
         if (rc != 0) {
-            throw new XSErrorException(this.xs);
+            throw new UException(this.xs);
         }
 
         this.isStarted = false;
