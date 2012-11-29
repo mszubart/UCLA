@@ -5,6 +5,7 @@
 #include "UServer.h"
 #include "UException.h"
 #include <memory>
+#include <functional>
 
 namespace UCLA{
 
@@ -35,9 +36,10 @@ namespace UCLA{
 		Creates server based on configuration.
 
 		@param \b serverName Name of server.
+		@param \b handler Receive handler.
 		@return Server object. (no autostart).
 		*/
-		std::unique_ptr<UServer> GetServer(char *serverName);
+		std::unique_ptr<UServer> GetServer(char *serverName, std::function<void(char*, int)> handler);
 
 		/**
 		Creates configuration object for client.

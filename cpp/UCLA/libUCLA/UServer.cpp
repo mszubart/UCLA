@@ -9,9 +9,8 @@
 
 using namespace UCLA;
 
-UServer::UServer(UConfig &config, bool autostart){
+UServer::UServer(UConfig &config, std::function<void(char*, int)> handler, bool autostart): _receive_handler(handler){
 	this->_isStarted = false;
-	this->_receive_handler = NULL;
 	this->_ctx = NULL;
 	this->_sock = NULL;
 	this->_endpoint = NULL;
@@ -54,9 +53,7 @@ void UServer::Receive(void){
 		throw UException(err.what());
 	}
 
-	if(this->_receive_handler != NULL){
-		this->_receive_handler(buf, received_len);
-	}
+	this->_receive_handler(buf, received_len);
 
 	delete[] buf;
 }
@@ -67,11 +64,11 @@ void UServer::Run(void){
 	}
 }
 
-void UServer::SetupReceiveHandler(UCLA_RECEIVE_HANDLER handler){
+void UServer::SetupReceiveHandler(std::function<void(char*, int)> handler){
 	this->_receive_handler = handler;
 }
 
-UServer::UServer(UServer &&that){
+UServer::UServer(UServer &&that): _receive_handler(that._receive_handler){
 	if(this->_isStarted)
 	{
 		this->CleanUpXS();
@@ -81,6 +78,7 @@ UServer::UServer(UServer &&that){
 	this->_ctx = NULL;
 	this->_sock = NULL;
 	this->_endpoint = NULL;
+	that._receive_handler = nullptr;
 
 	CopyEndpoint(that.Endpoint());
 
@@ -97,6 +95,8 @@ UServer& UServer::operator=(UServer&& that){
 		this->_isStarted = false;
 		this->_ctx = NULL;
 		this->_sock = NULL;
+		this->_receive_handler = that._receive_handler;
+		that._receive_handler = nullptr;
 
 		CopyEndpoint(that.Endpoint());
 

@@ -3,6 +3,7 @@
 
 #include "UConfig.h"
 #include "UException.h"
+#include <functional>
 
 namespace UCLA{
 
@@ -16,11 +17,12 @@ namespace UCLA{
 
 		Creates server instance from specified config.
 
-		@param \b config Reference to configuration object
+		@param \b config Reference to configuration object.
+		@param \b handler Receive handler.
 		@param \b autostart Tells if server will be started automatically. 
 		Otherwise you will have to call Start method. Default value = false.
 		*/
-		UServer(UConfig &config, bool autostart=false);
+		UServer(UConfig &config, std::function<void(char*, int)> handler, bool autostart=false);
 
 		/**
 		Move constructor.
@@ -57,9 +59,9 @@ namespace UCLA{
 		This handler is called every time when message is received
 		\b NOTE: Handler shouldn't be blocking.
 
-		@param \b handler Pointer to void (char*, int) function.
+		@param \b handler std::function<void(char*, int)>.
 		*/
-		void SetupReceiveHandler(UCLA_RECEIVE_HANDLER handler);
+		void SetupReceiveHandler(std::function<void(char*, int)> handler);
 
 		/**
 		Tells if server has been started
@@ -78,7 +80,7 @@ namespace UCLA{
 		~UServer(void);
 
 	private:
-		UCLA_RECEIVE_HANDLER _receive_handler;
+		std::function<void(char*, int)> _receive_handler;
 
 		char* _endpoint;
 		void *_ctx;

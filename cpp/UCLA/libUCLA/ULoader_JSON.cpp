@@ -55,9 +55,9 @@ std::unique_ptr<UConfig> ULoader_JSON::GetServerConfig(char *serverName) {
 	return std::move(config);
 }
 
-std::unique_ptr<UServer> ULoader_JSON::GetServer(char *serverName) {
+std::unique_ptr<UServer> ULoader_JSON::GetServer(char *serverName, std::function<void(char*, int)> handler) {
 	std::unique_ptr<UConfig> config = GetServerConfig(serverName);
-	std::unique_ptr<UServer> server(new UServer(*config));	
+	std::unique_ptr<UServer> server(new UServer(*config, handler));	
 
 	return std::move(server);
 }

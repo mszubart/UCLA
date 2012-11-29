@@ -6,8 +6,6 @@
 using namespace std; 
 using namespace UCLA;
 
-void OnDataReceived(char *buf, int len);
-
 int main(int argc, char** argv)
 {
 	cout << "Hi there! You will be receiving a random numbers from remote input.\n";
@@ -16,9 +14,16 @@ int main(int argc, char** argv)
 
 	try{
 		ULoader_JSON configLoader("config.json");
-		unique_ptr<UServer> server = configLoader.GetServer("input1");
 
-		server->SetupReceiveHandler(OnDataReceived);
+		// Yes, you can use lambda! Or you can just bind std::function<void(char*, int)>.
+		// Whatever :)
+		unique_ptr<UServer> server = configLoader.GetServer("input1",[](char* buf, int len){
+			cout << "\n";
+
+			for(int i = 0; i<len; i++){
+				cout << (int)buf[i] << "\t";
+			}
+		});
 
 		server->Run();
 	}catch(UException &err){
@@ -28,12 +33,3 @@ int main(int argc, char** argv)
 	(void) getchar();
 	return 0;
 }
-
-void OnDataReceived(char *buf, int len){
-	cout << "\n";
-
-	for(int i = 0; i<len; i++){
-		cout << (int)buf[i] << "\t";
-	}
-}
-
