@@ -2,7 +2,7 @@
 using System;
 
 namespace libUCLA {
-    public class UClient {
+    public class UClient : IDisposable {
 
         /// <summary>
         /// True if connection has been started.
