@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libUCLA", "libUCLA\libUCLA.vcxproj", "{C47B4F93-D131-45D1-8DB1-CAFD4C8D89E4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UCLA_Server", "UCLA_Server\UCLA_Server.vcxproj", "{C779DBD1-6118-409C-87C1-C513BC1D0263}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UCLA_Receiver", "UCLA_Receiver\UCLA_Receiver.vcxproj", "{C779DBD1-6118-409C-87C1-C513BC1D0263}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UCLA_Client", "UCLA_Client\UCLA_Client.vcxproj", "{7475ACEA-0F17-4C98-9431-95919CDF3DDB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UCLA_Sender", "UCLA_Sender\UCLA_Sender.vcxproj", "{7475ACEA-0F17-4C98-9431-95919CDF3DDB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{59116D6D-93E0-4044-BEF3-1005E1E4C7EF}"
 EndProject

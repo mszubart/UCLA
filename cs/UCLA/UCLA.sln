@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libUCLA", "libUCLA\libUCLA.csproj", "{71307274-FD58-42E6-8793-BC4C83F435D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UCLA_Server", "UCLA_Server\UCLA_Server.csproj", "{9D83235E-51BD-41B8-9FA9-1543F4109547}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UCLA_Receiver", "UCLA_Receiver\UCLA_Receiver.csproj", "{9D83235E-51BD-41B8-9FA9-1543F4109547}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UCLA_Client", "UCLA_Client\UCLA_Client.csproj", "{6137C2A4-E05D-4D48-9BE5-68E8F7A42D36}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UCLA_Sender", "UCLA_Sender\UCLA_Sender.csproj", "{6137C2A4-E05D-4D48-9BE5-68E8F7A42D36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
