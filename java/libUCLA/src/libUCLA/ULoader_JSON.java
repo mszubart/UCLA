@@ -10,8 +10,8 @@ import net.sf.json.JSONSerializer;
 public class ULoader_JSON {
 
     private JSONObject jsonData;
-    private JSONObject serverData;
-    private JSONObject clientData;
+    private JSONObject receiverData;
+    private JSONObject senderData;
 
     public ULoader_JSON(String fileName) throws UException {
         try {
@@ -25,14 +25,14 @@ public class ULoader_JSON {
 
     }
 
-    public UConfig getServerConfig(String serverName) throws UException {
+    public UConfig getReceiverConfig(String inputName) throws UException {
         String iface = "";
         String port = "";
 
         try {
-            serverData = jsonData.getJSONObject("inputs");
-            iface = serverData.getJSONObject(serverName).getString("interface");
-            port = serverData.getJSONObject(serverName).getString("port");
+            receiverData = jsonData.getJSONObject("inputs");
+            iface = receiverData.getJSONObject(inputName).getString("interface");
+            port = receiverData.getJSONObject(inputName).getString("port");
         } catch (Exception e) {
             throw new UException("Cannot read server values from specified configuration.", e);
         }
@@ -41,20 +41,20 @@ public class ULoader_JSON {
         return config;
     }
 
-    public UServer getServer(String serverName) throws UException {
-        UServer server = new UServer(this.getServerConfig(serverName));
+    public UReceiver getReceiver(String inputName) throws UException {
+        UReceiver receiver = new UReceiver(this.getReceiverConfig(inputName));
 
-        return server;
+        return receiver;
     }
 
-    public UConfig getClientConfig(String clientName) throws UException {
+    public UConfig getSenderConfig(String outputName) throws UException {
         String host = "";
         String port = "";
 
         try {
-            clientData = jsonData.getJSONObject("outputs");
-            host = clientData.getJSONObject(clientName).getString("host");
-            port = clientData.getJSONObject(clientName).getString("port");
+            senderData = jsonData.getJSONObject("outputs");
+            host = senderData.getJSONObject(outputName).getString("host");
+            port = senderData.getJSONObject(outputName).getString("port");
         } catch (Exception e) {
             throw new UException("Cannot read client values from specified configuration.", e);
         }
@@ -63,10 +63,10 @@ public class ULoader_JSON {
         return config;
     }
 
-    public UClient getClient(String clientName) throws UException {
-        UClient client = new UClient(this.getClientConfig(clientName));
+    public USender getSender(String outputName) throws UException {
+        USender sender = new USender(this.getSenderConfig(outputName));
 
-        return client;
+        return sender;
     }
 
     private String readJsonFromFile(String file) throws FileNotFoundException, IOException {

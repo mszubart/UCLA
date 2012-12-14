@@ -2,7 +2,7 @@ package UCLA_Client;
 
 import java.io.IOException;
 import java.util.Random;
-import libUCLA.UClient;
+import libUCLA.USender;
 import libUCLA.UException;
 import libUCLA.ULoader_JSON;
 
@@ -13,7 +13,7 @@ public class Client {
         System.out.printf("Me waiting connection...\n");
 
         try {
-            UClient client = new ULoader_JSON("config.json").getClient("output1");
+            USender client = new ULoader_JSON("config.json").getSender("output1");
 
             for (int i = 0; i < 3; i++) {
                 client.SendData(_8randomBytes());

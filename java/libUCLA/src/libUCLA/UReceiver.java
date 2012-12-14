@@ -3,7 +3,7 @@ package libUCLA;
 import io.crossroads.jni.*;
 import java.nio.ByteBuffer;
 
-public final class UServer {
+public final class UReceiver {
 
     public static final int MaxDataLength = 256;
 
@@ -31,7 +31,7 @@ public final class UServer {
      * @throws XSErrorException Will never ever throw this exception, because
      * autostart is off by default so there's no attempt to even use libxs.
      */
-    public UServer(UConfig config) throws UException {
+    public UReceiver(UConfig config) throws UException {
         this(config, false);
     }
 
@@ -46,7 +46,7 @@ public final class UServer {
      * @throws XSErrorException exception when something fails (only if
      * autostart is enabled).
      */
-    public UServer(UConfig config, boolean autostart) throws UException {
+    public UReceiver(UConfig config, boolean autostart) throws UException {
         this.endpoint = config.getEndpoint();
 
         if (autostart) {
@@ -89,7 +89,7 @@ public final class UServer {
             this.Start();
         }
         
-        ByteBuffer buf = ByteBuffer.allocateDirect(UServer.MaxDataLength);
+        ByteBuffer buf = ByteBuffer.allocateDirect(UReceiver.MaxDataLength);
 
         int receivedLength =
                 this.xs.xs_recv(this.sock, buf, 0, MaxDataLength, 0);

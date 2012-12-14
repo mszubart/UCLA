@@ -2,7 +2,7 @@ package UCLA_Server;
 
 import java.io.IOException;
 import libUCLA.UReceiveHandler;
-import libUCLA.UServer;
+import libUCLA.UReceiver;
 import libUCLA.UException;
 import libUCLA.ULoader_JSON;
 
@@ -27,7 +27,7 @@ public class Server {
 
         MessageDisplay md = new MessageDisplay();
         try {
-            UServer server = new ULoader_JSON("config.json").getServer("input1");
+            UReceiver server = new ULoader_JSON("config.json").getReceiver("input1");
 
             server.SetupReceiveHandler(md);
 
