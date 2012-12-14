@@ -1,8 +1,8 @@
 # Unified Communication Layer Alternative
 ## Structure of configuration file
-UCLA configuration file is a JSON text file and contains information needed to successfully connect `Server` and `Client`
-You can notice that configuration files for `Server` and `Client` are very similar, so you can use one file for all configuration.
-The only difference is that for `Server` you have to specify [interface](http://www.crossroads.io/1-0:xs-tcp) and for `Client` you have to specify host.
+UCLA configuration file is a JSON text file and contains information needed to successfully connect `Receiver` and `Sender`
+You can notice that configuration files for `Receiver` and `Sender` are very similar, so you can use one file for all configuration.
+The only difference is that for `Receiver` you have to specify [interface](http://www.crossroads.io/1-0:xs-tcp) and for `Sender` you have to specify host.
 
 * UCLA configuration parser is case sevsitive.
 * `Input` and `Output` names follow C language naming conventions.
@@ -11,8 +11,8 @@ The only difference is that for `Server` you have to specify [interface](http://
 * `port` value type is string. This value can contain only digits.
 
 ## Examples:
-### Server
-For `Server`, user defines `inputs` which will listen on specified port and [interface](http://www.crossroads.io/1-0:xs-tcp).
+### Receiver
+For `Receiver`, user defines `inputs` which will listen on specified port and [interface](http://www.crossroads.io/1-0:xs-tcp).
 ``` JSON
 {
     "inputs":{
@@ -29,8 +29,8 @@ For `Server`, user defines `inputs` which will listen on specified port and [int
 }
 ```
 
-### Client
-For `Client`, user defines `outputs` which will send data to specified `port` on `host`.
+### Sender
+For `Sender`, user defines `outputs` which will send data to specified `port` on `host`.
 ``` JSON
 {
     "outputs":{
@@ -48,7 +48,7 @@ For `Client`, user defines `outputs` which will send data to specified `port` on
 ```
 
 ### Mixed
-This file contains configuration for both `Server` and `Client`
+This file contains configuration for both `Receiver` and `Sender`
 ``` JSON
 {
     "outputs":{

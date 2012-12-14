@@ -29,20 +29,20 @@ Those are working examples - you can copy and run them.
 
 List of examples for other languages is available at the bottom of this document.
 
-### Client
+### Sender
 
 ``` C#
 using System;
 
 using libUCLA;
 
-namespace UCLA_Client {
-    class Client {
+namespace UCLA_Sender {
+    class Sender {
         static void Main(string[] args) {
             try {
-                UClient client = new ULoader_JSON("config.json").GetClient("output1"); // Create client object, using specified configuration, 
-                //client.Start(); // Start client connection explicitly. 
-                client.SendData(new byte[] {1,2,3}); // Send some data | also starts connection if client connection was not started
+                USender sender = new ULoader_JSON("config.json").GetSender("output1"); // Create sender object, using specified configuration, 
+                //sender.Start(); // Start sender connection explicitly. 
+                sender.SendData(new byte[] {1,2,3}); // Send some data | also starts connection if sender connection was not started
 
             } catch (UException ex) {
                 Console.Write(String.Format("Something went horribly wrong:\n\t{0}\n", ex.Message));
@@ -54,33 +54,33 @@ namespace UCLA_Client {
 }
 ```
 
-### Server
+### Receiver
 
 ``` C#
 using System;
 
 using libUCLA;
 
-namespace UCLA_Server {
-    class Server {
+namespace UCLA_Receiver {
+    class Receiver {
         static void Main(string[] args) {
             try {
-                UServer server = new ULoader_JSON("config.json").GetServer("input1"); // Create server object from configuration.
+                UReceiver receiver = new ULoader_JSON("config.json").GetReceiver("input1"); // Create receiver object from configuration.
 
-                server.DataReceived += new UReceiveHandler(OnDataReceived); // Before start, you should bind your event handler.
+                receiver.DataReceived += new UReceiveHandler(OnDataReceived); // Before start, you should bind your event handler.
                                                                             // Otherwise you could loose some data.
 
-                //server.Start(); // Explicitly start a server after binding handler.
+                //receiver.Start(); // Explicitly start a receiver after binding handler.
                                   // Otherwise first call to receive will do it for you.
 
-                server.Run(); // This is test method, which runs in infinite loop.
+                receiver.Run(); // This is test method, which runs in infinite loop.
                               // You should rather use Receive method in a real application.
             } catch (UException ex) {
                 Console.Write(String.Format("Something went horribly wrong:\n\t{0}\n", ex.Message));
             }
         }
 
-        private static void OnDataReceived(byte[] buf) { // This method is called whenever server receives a message.
+        private static void OnDataReceived(byte[] buf) { // This method is called whenever receiver receives a message.
             Console.Write("\n");                         // You should remember that this method must return 
                                                          // as soon as possible for best performance.
             foreach (byte b in buf) {
@@ -94,13 +94,13 @@ namespace UCLA_Server {
 ## Examples for other languages
 
 ### `C++`
-* [`Client`](https://github.com/mszubart/UCLA/blob/master/cpp/UCLA/UCLA_Client/UCLA_Client.cpp)
-* [`Server`](https://github.com/mszubart/UCLA/blob/master/cpp/UCLA/UCLA_Server/UCLA_Server.cpp)
+* [`Sender`](https://github.com/mszubart/UCLA/blob/master/cpp/UCLA/UCLA_Sender/UCLA_Sender.cpp)
+* [`Receiver`](https://github.com/mszubart/UCLA/blob/master/cpp/UCLA/UCLA_Receiver/UCLA_Receiver.cpp)
 
 ### `C#`
-* [`Client`](https://github.com/mszubart/UCLA/blob/master/cs/UCLA/UCLA_Client/Client.cs)
-* [`Server`](https://github.com/mszubart/UCLA/blob/master/cs/UCLA/UCLA_Server/Server.cs)
+* [`Sender`](https://github.com/mszubart/UCLA/blob/master/cs/UCLA/UCLA_Sender/Sender.cs)
+* [`Receiver`](https://github.com/mszubart/UCLA/blob/master/cs/UCLA/UCLA_Receiver/Receiver.cs)
 
 ### `Java`
-* [`Client`](https://github.com/mszubart/UCLA/blob/master/java/UCLA_Client/src/UCLA_Client/Client.java)
-* [`Server`](https://github.com/mszubart/UCLA/blob/master/java/UCLA_Server/src/UCLA_Server/Server.java)
+* [`Sender`](https://github.com/mszubart/UCLA/blob/master/java/UCLA_Sender/src/UCLA_Sender/Sender.java)
+* [`Receiver`](https://github.com/mszubart/UCLA/blob/master/java/UCLA_Receiver/src/UCLA_Receiver/Receiver.java)
