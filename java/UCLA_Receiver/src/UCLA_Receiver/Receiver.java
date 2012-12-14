@@ -18,7 +18,7 @@ class MessageDisplay implements UReceiveHandler {
     }
 }
 
-public class Server {
+public class Receiver {
 
     public static void main(String[] args) {
         System.out.printf("Hi there! You will be receiving a random numbers from remote input.\n");

@@ -6,7 +6,7 @@ import libUCLA.USender;
 import libUCLA.UException;
 import libUCLA.ULoader_JSON;
 
-public class Receiver {
+public class Sender {
 
     public static void main(String[] args) {
         System.out.printf("Me is client. Me is input. Me sending random number things.\n");
