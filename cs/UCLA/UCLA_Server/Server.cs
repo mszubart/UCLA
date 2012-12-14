@@ -10,7 +10,7 @@ namespace UCLA_Server {
             Console.Write("Waiting for connection...\n");
 
             try {
-                UServer server = new ULoader_JSON("config.json").GetServer("input1");
+                UReceiver server = new ULoader_JSON("config.json").GetReceiver("input1");
                 server.DataReceived += new UReceiveHandler(OnDataReceived);
 
                 server.Run();

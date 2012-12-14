@@ -11,7 +11,7 @@ namespace UCLA_Client {
             Console.Write("Me waiting connection...\n");
 
             try {
-                UClient client = new ULoader_JSON("config.json").GetClient("output1");
+                USender client = new ULoader_JSON("config.json").GetSender("output1");
 
                 for (int i = 0; i < 3; i++) {
                     client.SendData(_8randomBytes());

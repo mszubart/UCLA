@@ -14,11 +14,11 @@ namespace libUCLA {
         }
     }
 
-    public class UServer : IDisposable {
+    public class UReceiver : IDisposable {
         public const int MaxDataLength = 256;
 
         /// <summary>
-        /// True if server has been started
+        /// True if receiver has been started
         /// </summary>
         public bool IsStarted {
             get { return this.isStarted; }
@@ -37,12 +37,12 @@ namespace libUCLA {
         private bool _disposed;
 
         /// <summary>
-        /// UCLA Server constructor.
-        /// Creates server instance from specified config.
+        /// UCLA Receiver constructor.
+        /// Creates receiver instance from specified config.
         /// </summary>
         /// <param name="config">Reference to configuration object.</param>
-        /// <param name="autostart">Tells if server will be started automatically.</param>
-        public UServer(UConfig config, bool autostart = false) {
+        /// <param name="autostart">Tells if receiver will be started automatically.</param>
+        public UReceiver(UConfig config, bool autostart = false) {
             this.endpoint = config.Endpoint;
 
             if (autostart) {
@@ -51,7 +51,7 @@ namespace libUCLA {
         }
 
         /// <summary>
-        /// Starts a server.
+        /// Starts a receiver.
         /// </summary>
         public void Start() {
             EnsureNotDisposed();
@@ -80,7 +80,7 @@ namespace libUCLA {
                 this.Start();
             }
 
-            byte[] buf = new byte[UServer.MaxDataLength];
+            byte[] buf = new byte[UReceiver.MaxDataLength];
             int receivedLength = -1;
 
             try {

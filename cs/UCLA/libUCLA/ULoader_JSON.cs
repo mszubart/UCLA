@@ -18,8 +18,8 @@ namespace libUCLA {
     }
 
     public class ULoader_JSON {
-        private JObject clientConfig;
-        private JObject serverConfig;
+        private JObject outputConfig;
+        private JObject inputConfig;
 
         /// <summary>
         /// Preloads configuration file.
@@ -33,13 +33,13 @@ namespace libUCLA {
                     //Inputs
                     if (config.GetValue("inputs") != null) {
                         var inputs = config.GetValue("inputs").ToString(Newtonsoft.Json.Formatting.None);
-                        this.serverConfig = JObject.Parse(inputs);
+                        this.inputConfig = JObject.Parse(inputs);
                     }
 
                     //Outputs
                     if (config.GetValue("outputs") != null) {
                         var outputs = config.GetValue("outputs").ToString(Newtonsoft.Json.Formatting.None);
-                        this.clientConfig = JObject.Parse(outputs);
+                        this.outputConfig = JObject.Parse(outputs);
                     }
                 }
             } catch (Exception ex) {
@@ -48,19 +48,19 @@ namespace libUCLA {
         }
 
         /// <summary>
-        /// Creates configuration object for server.
+        /// Creates configuration object for receiver.
         /// </summary>
-        /// <param name="serverName">Server name.</param>
+        /// <param name="inputName">Input name.</param>
         /// <returns>Configuration object.</returns>
-        public UConfig GetServerConfig(string serverName) {
-            if (this.serverConfig.GetValue(serverName) == null)
-                throw new ULoaderException("There is no such server defined in config file. Server name: '" + serverName + "'");
+        public UConfig GetReceiverConfig(string inputName) {
+            if (this.inputConfig.GetValue(inputName) == null)
+                throw new ULoaderException("There is no such input defined in config file. Input name: '" + inputName + "'");
 
-            var configInterface = this.serverConfig.GetValue(serverName)["interface"];
+            var configInterface = this.inputConfig.GetValue(inputName)["interface"];
             if (configInterface == null)
                 throw new ULoaderException("Cannot read 'interface' vale from specified configuration.");
 
-            var configPort = this.serverConfig.GetValue(serverName)["port"];
+            var configPort = this.inputConfig.GetValue(inputName)["port"];
             if (configPort == null)
                 throw new ULoaderException("Cannot read 'port' vale from specified configuration.");
 
@@ -70,29 +70,29 @@ namespace libUCLA {
         }
 
         /// <summary>
-        /// Creates server based on configuration.
+        /// Creates receiver based on configuration.
         /// </summary>
-        /// <param name="serverName">Name of server.</param>
-        /// <returns>Server object. (no autostart)</returns>
-        public UServer GetServer(string serverName) {
-            UServer server = new UServer(GetServerConfig(serverName));
+        /// <param name="inputName">Name of input.</param>
+        /// <returns>Receiver object. (no autostart)</returns>
+        public UReceiver GetReceiver(string inputName) {
+            UReceiver server = new UReceiver(GetReceiverConfig(inputName));
             return server;
         }
 
         /// <summary>
-        /// Creates configuration object for client.
+        /// Creates configuration object for sender.
         /// </summary>
-        /// <param name="serverName">Server name.</param>
+        /// <param name="outputName">Output name.</param>
         /// <returns>Configuration object.</returns>
-        public UConfig GetClientConfig(string clientName) {
-            if (this.clientConfig.GetValue(clientName) == null)
-                throw new ULoaderException("There is no such client defined in config file. Client name: '" + clientName + "'");
+        public UConfig GetSenderConfig(string outputName) {
+            if (this.outputConfig.GetValue(outputName) == null)
+                throw new ULoaderException("There is no such output defined in config file. Output name: '" + outputName + "'");
 
-            var configHost = this.clientConfig.GetValue(clientName)["host"];
+            var configHost = this.outputConfig.GetValue(outputName)["host"];
             if (configHost == null)
                 throw new ULoaderException("Cannot read 'host' vale from specified configuration.");
 
-            var configPort = this.clientConfig.GetValue(clientName)["port"];
+            var configPort = this.outputConfig.GetValue(outputName)["port"];
             if (configPort == null)
                 throw new ULoaderException("Cannot read 'port' vale from specified configuration.");
 
@@ -101,12 +101,12 @@ namespace libUCLA {
         }
 
         /// <summary>
-        /// Creates client based on configuration.
+        /// Creates sender based on configuration.
         /// </summary>
-        /// <param name="serverName">Name of server.</param>
-        /// <returns>Client object. (no autostart)</returns>
-        public UClient GetClient(string clientName) {
-            UClient client = new UClient(GetClientConfig(clientName));
+        /// <param name="outputName">Name of output.</param>
+        /// <returns>Sender object. (no autostart)</returns>
+        public USender GetSender(string outputName) {
+            USender client = new USender(GetSenderConfig(outputName));
             return client;
         }
     }

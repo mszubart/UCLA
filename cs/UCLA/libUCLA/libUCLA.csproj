@@ -47,9 +47,9 @@
   <ItemGroup>
     <Compile Include="UException.cs" />
     <Compile Include="ULoader_JSON.cs" />
-    <Compile Include="UClient.cs" />
+    <Compile Include="USender.cs" />
     <Compile Include="UConfig.cs" />
-    <Compile Include="UServer.cs" />
+    <Compile Include="UReceiver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

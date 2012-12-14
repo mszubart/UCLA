@@ -2,7 +2,7 @@
 using System;
 
 namespace libUCLA {
-    public class UClient : IDisposable {
+    public class USender : IDisposable {
 
         /// <summary>
         /// True if connection has been started.
@@ -19,13 +19,13 @@ namespace libUCLA {
         private bool _disposed;
 
         /// <summary>
-        /// UCLA Client constructor.
-        /// Creates client instance from specified config.
+        /// UCLA Sender constructor.
+        /// Creates sender instance from specified config.
         /// </summary>
         /// <param name="config">Reference to configuration object.</param>
         /// <param name="autostart">Tells if connection will be started automatically. 
         /// Otherwise you will have to call Start method. Default value = false.</param>
-        public UClient(UConfig config, bool autostart = false) {
+        public USender(UConfig config, bool autostart = false) {
             this.endpoint = config.Endpoint;
 
             if (autostart) {
@@ -34,7 +34,7 @@ namespace libUCLA {
         }
 
         /// <summary>
-        /// Starts connection to a server.
+        /// Starts connection to a receiver.
         /// </summary>
         public void Start() {
             if (this.isStarted) return;
@@ -53,7 +53,7 @@ namespace libUCLA {
         }
 
         /// <summary>
-        /// Sends data to a server in blocking mode.    
+        /// Sends data to a receiver in (hopefully) blocking mode.    
         /// </summary>
         /// <param name="data">Buffer with data.</param>
         public void SendData(byte[] data) {
