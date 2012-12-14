@@ -1,4 +1,4 @@
-#include "UServer.h"
+#include "UReceiver.h"
 #include "config.h"
 
 #ifdef UCLA_HAVE_UNIX
@@ -9,7 +9,7 @@
 
 using namespace UCLA;
 
-UServer::UServer(UConfig &config, std::function<void(char*, int)> handler, bool autostart): _receive_handler(handler){
+UReceiver::UReceiver(UConfig &config, std::function<void(char*, int)> handler, bool autostart): _receive_handler(handler){
 	this->_isStarted = false;
 	this->_ctx = NULL;
 	this->_sock = NULL;
@@ -22,7 +22,7 @@ UServer::UServer(UConfig &config, std::function<void(char*, int)> handler, bool 
 	}
 }
 
-void UServer::Start(void){
+void UReceiver::Start(void){
 	if(this->_isStarted){
 		return;
 	}
@@ -39,7 +39,7 @@ void UServer::Start(void){
 	this->_isStarted = true;
 }
 
-void UServer::Receive(void){
+void UReceiver::Receive(void){
 	if(!this->_isStarted){
 		this->Start();
 	}
@@ -58,17 +58,17 @@ void UServer::Receive(void){
 	delete[] buf;
 }
 
-void UServer::Run(void){
+void UReceiver::Run(void){
 	while(true){
 		this->Receive();
 	}
 }
 
-void UServer::SetupReceiveHandler(std::function<void(char*, int)> handler){
+void UReceiver::SetupReceiveHandler(std::function<void(char*, int)> handler){
 	this->_receive_handler = handler;
 }
 
-UServer::UServer(UServer &&that): _receive_handler(that._receive_handler){
+UReceiver::UReceiver(UReceiver &&that): _receive_handler(that._receive_handler){
 	if(this->_isStarted)
 	{
 		this->CleanUpXS();
@@ -82,10 +82,10 @@ UServer::UServer(UServer &&that): _receive_handler(that._receive_handler){
 
 	CopyEndpoint(that.Endpoint());
 
-	that.~UServer();
+	that.~UReceiver();
 }
 
-UServer& UServer::operator=(UServer&& that){
+UReceiver& UReceiver::operator=(UReceiver&& that){
 	if (this != &that){
 		if(this->_isStarted)
 		{
@@ -100,13 +100,13 @@ UServer& UServer::operator=(UServer&& that){
 
 		CopyEndpoint(that.Endpoint());
 
-		that.~UServer();
+		that.~UReceiver();
 	}
 
 	return *this;
 }
 
-void UServer::CopyEndpoint(const char* endpoint){
+void UReceiver::CopyEndpoint(const char* endpoint){
 	using namespace Utils;
 
 	if(this->_endpoint != NULL)
@@ -120,11 +120,11 @@ void UServer::CopyEndpoint(const char* endpoint){
 	m_strlcpy(this->_endpoint, strLength, endpoint);
 }
 
-bool UServer::IsStarted(void) const{
+bool UReceiver::IsStarted(void) const{
 	return this->_isStarted;
 }
 
-void UServer::CleanUpXS(void){
+void UReceiver::CleanUpXS(void){
 	if(this->_sock != NULL){
 		static_cast<xs::socket_t*>(this->_sock)->close();
 		delete static_cast<xs::socket_t*>(this->_sock);
@@ -139,7 +139,7 @@ void UServer::CleanUpXS(void){
 	}
 }
 
-UServer::~UServer(void){
+UReceiver::~UReceiver(void){
 	this->_isStarted = false;
 
 	delete[] this->_endpoint;

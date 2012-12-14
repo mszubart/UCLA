@@ -6,38 +6,38 @@
 
 namespace UCLA{
 
-	class UClient
+	class USender
 	{
 	public:
 
 		/**
-		UCLA Client constructor.
+		UCLA Sender constructor.
 
-		Creates client instance from specified config.
+		Creates sender instance from specified config.
 
 		@param \b config Reference to configuration object
 		@param \b autostart Tells if connection will be started automatically. 
 		Otherwise you will have to call Start method. Default value = false.
 		*/
-		UClient(UConfig& config, bool autostart=false);
+		USender(UConfig& config, bool autostart=false);
 
 		/**
-		Move cpnstructor.
+		Move constructor.
 		*/
-		UClient(UClient&& that);
+		USender(USender&& that);
 
 		/**
 		Move operator.
 		*/
-		UClient& operator=(UClient&& that);
+		USender& operator=(USender&& that);
 
 		/**
-		Starts connection to a server.
+		Starts connection to a receiver.
 		*/
 		void Start(void);
 
 		/**
-		Sends data to a server.
+		Sends data to a receiver.
 
 		@param \b buf Buffer with data.
 		@param \b len Length of the data.
@@ -60,7 +60,7 @@ namespace UCLA{
 			return this->_endpoint;
 		}
 
-		~UClient(void);
+		~USender(void);
 
 	private:
 		char* _endpoint;

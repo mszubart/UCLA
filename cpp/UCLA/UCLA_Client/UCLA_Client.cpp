@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#include <UClient.h>
+#include <USender.h>
 #include <ULoader_JSON.h>
 
 using namespace std;
@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 	
 	try{
 		ULoader_JSON configLoader("config.json");
-		unique_ptr<UClient> client = configLoader.GetClient("output1");
+		unique_ptr<USender> client = configLoader.GetSender("output1");
 
 		for(int i = 0; i < 3; i++){
 			MakeItRandom(r, RND_LEN);

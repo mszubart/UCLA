@@ -1,4 +1,4 @@
-#include "UClient.h"
+#include "USender.h"
 #include "config.h"
 
 #ifdef UCLA_HAVE_UNIX
@@ -9,7 +9,7 @@
 
 using namespace UCLA;
 
-UClient::UClient(UConfig &config, bool autostart){
+USender::USender(UConfig &config, bool autostart){
 	this->_isStarted = false;
 	this->_ctx = NULL;
 	this->_sock = NULL;
@@ -22,7 +22,7 @@ UClient::UClient(UConfig &config, bool autostart){
 	}
 }
 
-UClient::UClient(UClient&& that){
+USender::USender(USender&& that){
 	if(this->_isStarted)
 	{
 		this->CleanUpXS();
@@ -35,10 +35,10 @@ UClient::UClient(UClient&& that){
 
 	CopyEndpoint(that.Endpoint());
 
-	that.~UClient();
+	that.~USender();
 }
 
-UClient& UClient::operator=(UClient&& that){
+USender& USender::operator=(USender&& that){
 	if (this != &that){
 		if(this->_isStarted)
 		{
@@ -51,13 +51,13 @@ UClient& UClient::operator=(UClient&& that){
 
 		CopyEndpoint(that.Endpoint());
 
-		that.~UClient();
+		that.~USender();
 	}
 
 	return *this;
 }
 
-void UClient::CopyEndpoint(const char* endpoint){
+void USender::CopyEndpoint(const char* endpoint){
 	using namespace Utils;
 
 	if(this->_endpoint != NULL)
@@ -71,7 +71,7 @@ void UClient::CopyEndpoint(const char* endpoint){
 	m_strlcpy(this->_endpoint, strLength, endpoint);
 }
 
-void UClient::Start(void){
+void USender::Start(void){
 	if(this->_isStarted){
 		return;
 	}
@@ -88,7 +88,7 @@ void UClient::Start(void){
 	this->_isStarted = true;
 }
 
-void UClient::SendData(const char *buf, size_t len, bool nonBlocking){
+void USender::SendData(const char *buf, size_t len, bool nonBlocking){
 	if(!this->_isStarted){
 		this->Start();
 	}
@@ -100,11 +100,11 @@ void UClient::SendData(const char *buf, size_t len, bool nonBlocking){
 	}
 }
 
-bool UClient::IsStarted(void) const{
+bool USender::IsStarted(void) const{
 	return this->_isStarted;
 }
 
-void UClient::CleanUpXS(void){
+void USender::CleanUpXS(void){
 	if(this->_sock != NULL){
 		static_cast<xs::socket_t*>(this->_sock)->close();
 		delete static_cast<xs::socket_t*>(this->_sock);
@@ -119,7 +119,7 @@ void UClient::CleanUpXS(void){
 	}
 }
 
-UClient::~UClient(void){
+USender::~USender(void){
 	this->_isStarted = false;
 
 	delete[] this->_endpoint;

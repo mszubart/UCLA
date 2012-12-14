@@ -7,8 +7,8 @@ ULoader_JSON::ULoader_JSON(char *configFile){
 	json_t *config;
 	json_error_t error;
 	json_t *inputs, *outputs;
-	this->serverConfig = NULL;
-	this->clientConfig = NULL;
+	this->receiverConfig = NULL;
+	this->senderConfig = NULL;
 
 	try{
 		config = json_load_file(configFile, 0, &error);
@@ -17,14 +17,14 @@ ULoader_JSON::ULoader_JSON(char *configFile){
 			inputs = json_object_get(config, "inputs");
 			if(json_is_object(inputs))
 			{
-				this->serverConfig = inputs;
+				this->receiverConfig = inputs;
 			}
 
 			//Outputs
 			outputs = json_object_get(config, "outputs");
 			if(json_is_object(outputs))
 			{
-				this->clientConfig = outputs;
+				this->senderConfig = outputs;
 			}
 
 		}else
@@ -35,10 +35,10 @@ ULoader_JSON::ULoader_JSON(char *configFile){
 	}      
 }
 
-std::unique_ptr<UConfig> ULoader_JSON::GetServerConfig(char *serverName) {
+std::unique_ptr<UConfig> ULoader_JSON::GetReceiverConfig(char *inputName) {
 	json_t *server, *configInterface, *configPort;
 
-	server = json_object_get(static_cast<json_t*>(this->serverConfig), serverName);
+	server = json_object_get(static_cast<json_t*>(this->receiverConfig), inputName);
 	if(!json_is_object(server))	
 		throw UException("There is no such server defined in config file.");
 
@@ -55,17 +55,17 @@ std::unique_ptr<UConfig> ULoader_JSON::GetServerConfig(char *serverName) {
 	return std::move(config);
 }
 
-std::unique_ptr<UServer> ULoader_JSON::GetServer(char *serverName, std::function<void(char*, int)> handler) {
-	std::unique_ptr<UConfig> config = GetServerConfig(serverName);
-	std::unique_ptr<UServer> server(new UServer(*config, handler));	
+std::unique_ptr<UReceiver> ULoader_JSON::GetReceiver(char *inputName, std::function<void(char*, int)> handler) {
+	std::unique_ptr<UConfig> config = GetReceiverConfig(inputName);
+	std::unique_ptr<UReceiver> server(new UReceiver(*config, handler));	
 
 	return std::move(server);
 }
 
-std::unique_ptr<UConfig> ULoader_JSON::GetClientConfig(char *clientName) {
+std::unique_ptr<UConfig> ULoader_JSON::GetSenderConfig(char *outputName) {
 	json_t *server, *configHost, *configPort;
 
-	server = json_object_get(static_cast<json_t*>(this->clientConfig), clientName);
+	server = json_object_get(static_cast<json_t*>(this->senderConfig), outputName);
 	if(!json_is_object(server))	
 		throw UException("There is no such client defined in config file.");
 
@@ -82,9 +82,9 @@ std::unique_ptr<UConfig> ULoader_JSON::GetClientConfig(char *clientName) {
 	return std::move(config);
 }
 
-std::unique_ptr<UClient> ULoader_JSON::GetClient(char *clientName) {
-	std::unique_ptr<UConfig> config = GetClientConfig(clientName);
-	std::unique_ptr<UClient> client(new UClient(*config));	
+std::unique_ptr<USender> ULoader_JSON::GetSender(char *outputName) {
+	std::unique_ptr<UConfig> config = GetSenderConfig(outputName);
+	std::unique_ptr<USender> client(new USender(*config));	
 
 	return std::move(client);
 }

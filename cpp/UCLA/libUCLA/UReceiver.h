@@ -9,33 +9,33 @@ namespace UCLA{
 
 	typedef void(*UCLA_RECEIVE_HANDLER)(char *buff, int len);
 
-	class UServer
+	class UReceiver
 	{
 	public:
 		/**
-		UCLA Server constructor.
+		UCLA Receiver constructor.
 
-		Creates server instance from specified config.
+		Creates receiver instance from specified config.
 
 		@param \b config Reference to configuration object.
 		@param \b handler Receive handler.
 		@param \b autostart Tells if server will be started automatically. 
 		Otherwise you will have to call Start method. Default value = false.
 		*/
-		UServer(UConfig &config, std::function<void(char*, int)> handler, bool autostart=false);
+		UReceiver(UConfig &config, std::function<void(char*, int)> handler, bool autostart=false);
 
 		/**
 		Move constructor.
 		*/
-		UServer(UServer &&that);
+		UReceiver(UReceiver &&that);
 
 		/**
 		Move operator.
 		*/
-		UServer& operator=(UServer&& that);
+		UReceiver& operator=(UReceiver&& that);
 
 		/**
-		Starts a server.
+		Starts a receiver.
 		*/
 		void Start(void);
 
@@ -64,9 +64,9 @@ namespace UCLA{
 		void SetupReceiveHandler(std::function<void(char*, int)> handler);
 
 		/**
-		Tells if server has been started
+		Tells if receiver has been started
 
-		@return True if server has been started
+		@return True if receiver has been started
 		*/
 		bool IsStarted(void) const;
 
@@ -77,7 +77,7 @@ namespace UCLA{
 			return this->_endpoint;
 		}
 
-		~UServer(void);
+		~UReceiver(void);
 
 	private:
 		std::function<void(char*, int)> _receive_handler;

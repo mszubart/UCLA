@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#include <UServer.h>
+#include <UReceiver.h>
 #include <ULoader_JSON.h>
 
 using namespace std; 
@@ -17,7 +17,7 @@ int main(int argc, char** argv)
 
 		// Yes, you can use lambda! Or you can just bind std::function<void(char*, int)>.
 		// Whatever :)
-		unique_ptr<UServer> server = configLoader.GetServer("input1",[](char* buf, int len){
+		unique_ptr<UReceiver> server = configLoader.GetReceiver("input1",[](char* buf, int len){
 			cout << "\n";
 
 			for(int i = 0; i<len; i++){
