@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 
 public final class UReceiver {
 
-    public static final int MaxDataLength = 256;
+    public static final int MaxDataLength = 1024;
 
     /**
      * Tells if server has been started.

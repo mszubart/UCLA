@@ -15,7 +15,7 @@ namespace libUCLA {
     }
 
     public class UReceiver : IDisposable {
-        public const int MaxDataLength = 256;
+        public const int MaxDataLength = 1024;
 
         /// <summary>
         /// True if receiver has been started

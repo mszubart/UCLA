@@ -86,7 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="UCLA_Sendercpp" />
+    <ClCompile Include="UCLA_Sender.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\libUCLA\libUCLA.vcxproj">
