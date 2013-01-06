@@ -68,13 +68,13 @@ namespace UCLA_Receiver {
                 UReceiver receiver = new ULoader_JSON("config.json").GetReceiver("input1"); // Create receiver object from configuration.
 
                 receiver.DataReceived += new UReceiveHandler(OnDataReceived); // Before start, you should bind your event handler.
-                                                                            // Otherwise you could loose some data.
+                                                                              // Otherwise you could loose some data.
 
-                //receiver.Start(); // Explicitly start a receiver after binding handler.
-                                  // Otherwise first call to receive will do it for you.
+                //receiver.Start(); // Explicitly start a receiver after binding a handler.
+                                    // Otherwise first call to receive will do it for you.
 
                 receiver.Run(); // This is test method, which runs in infinite loop.
-                              // You should rather use Receive method in a real application.
+                                // You should rather use Receive method in a real application.
             } catch (UException ex) {
                 Console.Write(String.Format("Something went horribly wrong:\n\t{0}\n", ex.Message));
             }
