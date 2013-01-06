@@ -7,8 +7,8 @@
     <ProjectGuid>{9D83235E-51BD-41B8-9FA9-1543F4109547}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UCLA_Server</RootNamespace>
-    <AssemblyName>UCLA_Server</AssemblyName>
+    <RootNamespace>UCLA_Receiver</RootNamespace>
+    <AssemblyName>UCLA_Receiver</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

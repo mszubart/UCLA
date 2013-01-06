@@ -2,7 +2,7 @@
 
 using libUCLA;
 
-namespace UCLA_Client {
+namespace UCLA_Sender {
     class Sender {
         static Random rnd = new Random();
 

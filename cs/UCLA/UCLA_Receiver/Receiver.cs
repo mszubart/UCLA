@@ -2,7 +2,7 @@
 
 using libUCLA;
 
-namespace UCLA_Server {
+namespace UCLA_Receiver {
     class Receiver {
         static void Main(string[] args) {
             Console.Write("Hi there! You will be receiving a random numbers from remote input.\n");
