@@ -11,6 +11,6 @@ if(UNIX)
 endif(UNIX)
 
 add_subdirectory(libUCLA)
-add_subdirectory(UCLA_Client)
-add_subdirectory(UCLA_Server)
+add_subdirectory(UCLA_Sender)
+add_subdirectory(UCLA_Receiver)
 
