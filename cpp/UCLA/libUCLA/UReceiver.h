@@ -7,8 +7,6 @@
 
 namespace UCLA{
 
-	typedef void(*UCLA_RECEIVE_HANDLER)(char *buff, int len);
-
 	class UReceiver
 	{
 	public:
