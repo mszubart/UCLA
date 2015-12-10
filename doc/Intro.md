@@ -19,7 +19,7 @@ This library provides quick and easy way to communicate between processes (even 
 
 ### Dependencies:
 
-* [Crossroads I/O](http://www.crossroads.io/)
+* [Crossroads I/O](https://github.com/crossroads-io/libxs)
 * C++ - [cppxs](https://github.com/250bpm/cppxs) + [Jansson](http://www.digip.org/jansson/) + [CMake](http://www.cmake.org/) on Linux
 * C# - [crossroads-net](https://github.com/jgoz/crossroads-net) + [Json.NET](http://james.newtonking.com/projects/json-net.aspx)
 * Java - [jxs](https://github.com/gonzus/jxs) + [Json-lib](http://json-lib.sourceforge.net/)
